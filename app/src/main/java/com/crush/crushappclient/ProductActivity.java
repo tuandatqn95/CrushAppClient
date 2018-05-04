@@ -1,8 +1,5 @@
 package com.crush.crushappclient;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -20,16 +17,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.crush.crushappclient.adapter.MainDrinkAdapter;
+import com.crush.crushappclient.model.Category;
 import com.crush.crushappclient.model.MainDrink;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProductActivity extends AppCompatActivity {
 
@@ -65,6 +62,12 @@ public class ProductActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 
+        List<Category> listCategory = seedData.getCategories();
+        for(int i=0;i<listCategory.size();i++){
+            TabLayout.Tab tab = tabLayout.newTab();
+            tab.setText(listCategory.get(i).getName());
+            tabLayout.addTab(tab);
+        }
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
@@ -132,8 +135,11 @@ public class ProductActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_product, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            GridView gridView = (GridView) rootView.findViewById(R.id.gvName);
+
+            //Toast.makeText(getContext(), getArguments().getInt(ARG_SECTION_NUMBER)+"", Toast.LENGTH_SHORT).show();
+            MainDrinkAdapter adapter = new MainDrinkAdapter(getContext(), (ArrayList<MainDrink>) seedData.getMainDrink());
+            gridView.setAdapter(adapter);
             return rootView;
         }
     }
@@ -158,7 +164,7 @@ public class ProductActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 6;
+            return seedData.getCategories().size();
         }
     }
 

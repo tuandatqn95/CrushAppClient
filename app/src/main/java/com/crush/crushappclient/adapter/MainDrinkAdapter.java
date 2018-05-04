@@ -1,11 +1,6 @@
 package com.crush.crushappclient.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +16,7 @@ import java.util.List;
 
 public class MainDrinkAdapter extends BaseAdapter {
     private Context context;
-    private ArrayList<MainDrink> listMainDrink;
-
+    private List<MainDrink> listMainDrink;
     public MainDrinkAdapter(Context context, ArrayList<MainDrink> listMainDrink) {
         this.context = context;
         this.listMainDrink = listMainDrink;
@@ -63,8 +57,8 @@ public class MainDrinkAdapter extends BaseAdapter {
         txtvName.setText(mainDrink.getName());
         txtvPrice.setText(mainDrink.getPrice()+"");
         // byte array to imageView
-        Bitmap imageProduct = BitmapFactory.decodeByteArray(mainDrink.getImage(), 0, mainDrink.getImage().length);
-        imgvProduct.setImageBitmap(imageProduct);
+        //Bitmap imageProduct = BitmapFactory.decodeByteArray(mainDrink.getImage(), 0, mainDrink.getImage().length);
+        imgvProduct.setImageResource(R.drawable.trasua);
 
         return item;
     }
