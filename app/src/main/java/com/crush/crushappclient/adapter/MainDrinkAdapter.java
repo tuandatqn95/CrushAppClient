@@ -29,12 +29,12 @@ public class MainDrinkAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
-        return null;
+        return listMainDrink.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return listMainDrink.get(i).getId();
     }
 
     private class ViewHolder {
@@ -58,7 +58,7 @@ public class MainDrinkAdapter extends BaseAdapter {
         txtvPrice.setText(mainDrink.getPrice()+"");
         // byte array to imageView
         //Bitmap imageProduct = BitmapFactory.decodeByteArray(mainDrink.getImage(), 0, mainDrink.getImage().length);
-        imgvProduct.setImageResource(R.drawable.trasua);
+        imgvProduct.setImageResource(mainDrink.getImage());
 
         return item;
     }

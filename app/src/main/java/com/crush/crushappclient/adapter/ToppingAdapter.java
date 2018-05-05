@@ -29,12 +29,12 @@ public class ToppingAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
-        return null;
+        return listTopping.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return listTopping.get(i).getId();
     }
 
     @Override

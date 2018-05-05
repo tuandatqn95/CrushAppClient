@@ -1,15 +1,16 @@
 package com.crush.crushappclient.model;
 
 import android.media.Image;
+import android.widget.ImageView;
 
 public class MainDrink {
     private int id;
     private String name;
     private int price;
-    private Image image;
+    private int image;
     private int categoryId;
 
-    public MainDrink(int id, String name, int price, Image image, int categoryId) {
+    public MainDrink(int id, String name, int price, int image, int categoryId) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -41,11 +42,11 @@ public class MainDrink {
         this.price = price;
     }
 
-    public Image getImage() {
+    public int getImage() {
         return image;
     }
 
-    public void setImage(Image image) {
+    public void setImage(int image) {
         this.image = image;
     }
 
