@@ -3,22 +3,21 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingRight="5dp"
-    android:paddingLeft="5dp"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp"
+    android:paddingRight="15dp"
+    android:paddingLeft="15dp"
+    android:paddingTop="1dp"
+    android:paddingBottom="5dp"
     android:background="@drawable/rounded_edge"
-
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ImageView
         android:id="@+id/imgvproduct"
-        android:layout_width="70dp"
-        android:layout_height="117dp"
-        android:layout_gravity="center"
-        android:layout_weight="1"
         android:padding="@dimen/activity_margin"
         android:scaleType="fitCenter"
+        android:layout_width="95dp"
+        android:layout_height="70dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
         app:srcCompat="@mipmap/ic_launcher_round" />
     <TextView
         android:id="@+id/txtvname"
@@ -27,16 +26,14 @@
         android:textColor="@color/colorDarkGray"
         android:layout_gravity="center"
         android:textSize="11dp"
-        android:layout_marginTop="@dimen/activity_margin"
         android:text="Trà sữa"/>
 
     <TextView
         android:id="@+id/txtvprice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:textColor="@color/colorAccent"
-        android:textSize="13dp"
+        android:textSize="12dp"
         android:layout_gravity="center"
         android:text="20.000 đ"/>
 </LinearLayout>

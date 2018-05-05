@@ -1,5 +1,6 @@
 package com.crush.crushappclient;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -140,6 +142,14 @@ public class ProductActivity extends AppCompatActivity {
             //Toast.makeText(getContext(), getArguments().getInt(ARG_SECTION_NUMBER)+"", Toast.LENGTH_SHORT).show();
             MainDrinkAdapter adapter = new MainDrinkAdapter(getContext(), (ArrayList<MainDrink>) seedData.getMainDrink());
             gridView.setAdapter(adapter);
+            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    //Toast.makeText(getContext(), "item", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getContext(),ProductInfoActivity.class);
+                    startActivity(intent);
+                }
+            });
             return rootView;
         }
     }

@@ -6,6 +6,7 @@ import android.widget.ImageView;
 
 import com.crush.crushappclient.model.Category;
 import com.crush.crushappclient.model.MainDrink;
+import com.crush.crushappclient.model.Topping;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -50,7 +51,17 @@ public class seedData {
 
         return list;
     }
+    public static List<Topping> getListTopping (){
+        List<Topping> listTopping = new ArrayList<>();
+        listTopping.add(new Topping(1,"pudding",10000,null));
+        listTopping.add(new Topping(1,"pudding",12000,null));
+        listTopping.add(new Topping(1,"pudding",13000,null));
+        listTopping.add(new Topping(1,"pudding",14000,null));
+        listTopping.add(new Topping(1,"pudding",15000,null));
+        listTopping.add(new Topping(1,"pudding",16000,null));
 
+        return listTopping;
+    }
     private byte [] imageView_to_Byte(ImageView imageView){
         BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
         Bitmap bmp = drawable.getBitmap();
