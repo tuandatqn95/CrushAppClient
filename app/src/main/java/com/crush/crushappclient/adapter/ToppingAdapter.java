@@ -40,7 +40,7 @@ public class ToppingAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-        View item = inflater.inflate(R.layout.topping_layout, null);
+        View item = inflater.inflate(R.layout.topping_item_layout, null);
 
         ImageView imgvProduct = (ImageView) item.findViewById(R.id.imgvproduct);
         TextView txtvName = (TextView) item.findViewById(R.id.txtvname);

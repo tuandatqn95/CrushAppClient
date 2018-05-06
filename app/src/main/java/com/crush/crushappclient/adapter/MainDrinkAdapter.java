@@ -17,7 +17,7 @@ import java.util.List;
 public class MainDrinkAdapter extends BaseAdapter {
     private Context context;
     private List<MainDrink> listMainDrink;
-    public MainDrinkAdapter(Context context, ArrayList<MainDrink> listMainDrink) {
+    public MainDrinkAdapter(Context context, List<MainDrink> listMainDrink) {
         this.context = context;
         this.listMainDrink = listMainDrink;
     }
@@ -34,7 +34,7 @@ public class MainDrinkAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int i) {
-        return listMainDrink.get(i).getId();
+        return 0;
     }
 
     private class ViewHolder {
@@ -45,7 +45,7 @@ public class MainDrinkAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-        View item = inflater.inflate(R.layout.product_layout, null);
+        View item = inflater.inflate(R.layout.product_item_layout, null);
 
         ImageView imgvProduct = (ImageView) item.findViewById(R.id.imgvproduct);
         TextView txtvName = (TextView) item.findViewById(R.id.txtvname);
@@ -58,7 +58,7 @@ public class MainDrinkAdapter extends BaseAdapter {
         txtvPrice.setText(mainDrink.getPrice()+"");
         // byte array to imageView
         //Bitmap imageProduct = BitmapFactory.decodeByteArray(mainDrink.getImage(), 0, mainDrink.getImage().length);
-        imgvProduct.setImageResource(mainDrink.getImage());
+        imgvProduct.setImageResource(R.drawable.trasua);
 
         return item;
     }

@@ -30,10 +30,6 @@
             android:name=".ScrollingActivity"
             android:label="@string/title_activity_scrolling"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".ProductActivity"
-            android:label="@string/title_activity_product"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ProductInfoActivity"></activity>
     </application>
 

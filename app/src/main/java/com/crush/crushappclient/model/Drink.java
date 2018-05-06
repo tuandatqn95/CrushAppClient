@@ -1,6 +1,8 @@
 package com.crush.crushappclient.model;
 
-public class Drink {
+import java.io.Serializable;
+
+public class Drink implements Serializable {
     private int drinkId;
     private int toppingId;
 

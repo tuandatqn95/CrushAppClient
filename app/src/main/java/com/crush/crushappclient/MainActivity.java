@@ -4,13 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.crush.crushappclient.adapter.BottomNavigationPageAdapter;
+import com.crush.crushappclient.fragment.NotificationFragment;
+import com.crush.crushappclient.fragment.ProductFragment;
+import com.crush.crushappclient.fragment.ProfileFragment;
+
 public class MainActivity extends AppCompatActivity {
 
-    private TextView mTextMessage;
+    private ViewPager viewPaper;
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -19,15 +26,13 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
-                    loadProductActivity();
+                    viewPaper.setCurrentItem(0);
                     return true;
                 case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
-                    loadLoginActivity();
+                    viewPaper.setCurrentItem(1);
                     return true;
                 case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+                    viewPaper.setCurrentItem(2);
                     return true;
             }
             return false;
@@ -39,16 +44,49 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        viewPaper = (ViewPager) findViewById(R.id.navigationViewPaper);
+
+
+        setupViewPaper(viewPaper);
+        final BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+
+        viewPaper.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position) {
+                    case 0:
+                        navigation.setSelectedItemId(R.id.navigation_home);
+                        break;
+                    case 1:
+                        navigation.setSelectedItemId(R.id.navigation_dashboard);
+                        break;
+                    case 2:
+                        navigation.setSelectedItemId(R.id.navigation_notifications);
+                        break;
+                }
+                viewPaper.setCurrentItem(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
-    private void loadLoginActivity(){
-        Intent intent = new Intent(MainActivity.this,LoginActivity.class);
-        startActivity(intent);
+
+    private void setupViewPaper(ViewPager viewPaper) {
+        BottomNavigationPageAdapter adapter = new BottomNavigationPageAdapter(getSupportFragmentManager());
+        adapter.addFragment(new ProductFragment());
+        adapter.addFragment(new ProfileFragment());
+        adapter.addFragment(new NotificationFragment());
+        viewPaper.setAdapter(adapter);
     }
-    private void loadProductActivity(){
-        Intent intent = new Intent(MainActivity.this,ProductActivity.class);
-        startActivity(intent);
-    }
+
+
 }

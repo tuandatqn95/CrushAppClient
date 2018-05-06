@@ -48,7 +48,7 @@ public class CategoryAdapter extends BaseAdapter{
         View item = inflater.inflate(android.R.layout.simple_list_item_1, null);
         // gán giá trị
         Category category = listCategory.get(i);
-        item.setTag(category.getName());
+        item.setTag(category);
         return item;
     }
 }

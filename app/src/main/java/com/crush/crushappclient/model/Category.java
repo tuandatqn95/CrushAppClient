@@ -1,19 +1,25 @@
 package com.crush.crushappclient.model;
 
-public class Category {
-    private int id;
+import java.io.Serializable;
+
+public class Category implements Serializable {
+    private String id;
     private String name;
 
-    public Category(int id, String name) {
-        this.id = id;
-        this.name = name;
+    public Category() {
     }
 
-    public int getId() {
+    public Category(String id, String name ) {
+        this.setId(id);
+        this.setName(name);
+    }
+
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

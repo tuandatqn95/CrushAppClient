@@ -4,28 +4,21 @@ import android.media.Image;
 import android.widget.ImageView;
 
 public class MainDrink {
-    private int id;
-    private String name;
-    private int price;
-    private int image;
-    private int categoryId;
 
-    public MainDrink(int id, String name, int price, int image, int categoryId) {
-        this.id = id;
+    private String name;
+    private String price;
+    private String image;
+    private String categoryId;
+
+    public MainDrink(){}
+
+    public MainDrink(String name, String price, String image, String categoryId) {
+
         this.name = name;
         this.price = price;
         this.image = image;
         this.categoryId = categoryId;
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
@@ -34,27 +27,27 @@ public class MainDrink {
         this.name = name;
     }
 
-    public int getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
-    public int getCategoryId() {
+    public String getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(int categoryId) {
+    public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
     }
 }
