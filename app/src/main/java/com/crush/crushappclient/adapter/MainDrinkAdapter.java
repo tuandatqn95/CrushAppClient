@@ -37,29 +37,40 @@ public class MainDrinkAdapter extends BaseAdapter {
         return 0;
     }
 
-    private class ViewHolder {
+    static class ViewHolder {
         ImageView imgvProduct;
         TextView txtvName;
         TextView txtvPrice;
     }
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-        View item = inflater.inflate(R.layout.product_item_layout, null);
+        final ViewHolder viewHolder;
+        View item = view;
+        if (view == null){
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+            item = inflater.inflate(R.layout.product_item_layout, null);
+            viewHolder = new ViewHolder();
+            viewHolder.imgvProduct = (ImageView) item.findViewById(R.id.imgvproduct);
+            viewHolder.txtvName = (TextView) item.findViewById(R.id.txtvname);
+            viewHolder.txtvPrice = (TextView) item.findViewById(R.id.txtvprice);
+            item.setTag(viewHolder);
+        }
+        else{
+            viewHolder = (ViewHolder) item.getTag();
+        }
 
-        ImageView imgvProduct = (ImageView) item.findViewById(R.id.imgvproduct);
-        TextView txtvName = (TextView) item.findViewById(R.id.txtvname);
-        TextView txtvPrice = (TextView) item.findViewById(R.id.txtvprice);
 
 
         // gán giá trị
         MainDrink mainDrink = listMainDrink.get(i);
-        txtvName.setText(mainDrink.getName());
-        txtvPrice.setText(mainDrink.getPrice()+"");
+        viewHolder.txtvName.setText(mainDrink.getName());
+        viewHolder.txtvPrice.setText(mainDrink.getPrice()+"");
         // byte array to imageView
         //Bitmap imageProduct = BitmapFactory.decodeByteArray(mainDrink.getImage(), 0, mainDrink.getImage().length);
-        imgvProduct.setImageResource(R.drawable.trasua);
+        viewHolder.imgvProduct.setImageResource(R.drawable.trasua);
 
         return item;
     }
+
+
 }

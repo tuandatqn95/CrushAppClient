@@ -6,6 +6,8 @@ import android.widget.ImageView;
 
 import com.crush.crushappclient.model.Category;
 import com.crush.crushappclient.model.MainDrink;
+import com.crush.crushappclient.model.MenuProfile;
+import com.crush.crushappclient.model.Notification;
 import com.crush.crushappclient.model.Topping;
 
 import java.io.ByteArrayOutputStream;
@@ -48,6 +50,30 @@ public class seedData {
         listTopping.add(new Topping(66,"pudding",16000,null));
 
         return listTopping;
+    }
+    public static List<Notification> getNotificationList(){
+        List<Notification> listNotification = new ArrayList<>();
+
+        listNotification.add(new Notification(1,1,"Khuyến mãi 1","blalalalalalalal"));
+        listNotification.add(new Notification(1,1,"Khuyến mãi 1","blalalalalalalal"));
+        listNotification.add(new Notification(1,1,"Khuyến mãi 1","blalalalalalalal"));
+        listNotification.add(new Notification(1,1,"Khuyến mãi 1","blalalalalalalal"));
+        listNotification.add(new Notification(1,1,"Khuyến mãi 1","blalalalalalalal"));
+
+        return listNotification;
+
+    }
+    public static List<MenuProfile> getmenuProfileList(){
+        List<MenuProfile> menuProfileList = new ArrayList<>();
+
+        menuProfileList.add(new MenuProfile(1,"Quản lý tài khoảng"));
+        menuProfileList.add(new MenuProfile(1,"Lịch sử đơn hàng"));
+        menuProfileList.add(new MenuProfile(1,"Giới thiệu"));
+        menuProfileList.add(new MenuProfile(1,"Cài đặt cấu hình"));
+        menuProfileList.add(new MenuProfile(1,"Hỗ trợ"));
+
+        return menuProfileList;
+
     }
     private byte [] imageView_to_Byte(ImageView imageView){
         BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
