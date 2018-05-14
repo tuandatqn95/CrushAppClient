@@ -1,22 +1,24 @@
 package com.crush.crushappclient.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.crush.crushappclient.R;
-import com.crush.crushappclient.model.MainDrink;
 import com.crush.crushappclient.model.Notification;
 
 import java.util.List;
 
-public class NotificationAdapter extends BaseAdapter {
+public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.RecyclerViewHolder>{
     private Context context;
     private List<Notification> notificationList;
+    private OnItemClickedListener onItemClickedListener;
 
     public NotificationAdapter(Context context, List<Notification> notificationList) {
         this.context = context;
@@ -24,47 +26,67 @@ public class NotificationAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {
+    public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+        View item = inflater.inflate(R.layout.notification_item_layout, null);
+        return new RecyclerViewHolder(item);
+    }
+
+    @Override
+    public void onBindViewHolder(final RecyclerViewHolder holder,final int position) {
+        Notification notification = notificationList.get(position);
+        holder.imgv.setImageResource(R.drawable.trasua);
+        holder.txtvTittle.setText(notification.getTittle());
+        holder.txtvContent.setText(notification.getContent());
+        holder.line.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClickedListener != null) {
+                    onItemClickedListener.onItemClick(notificationList.get(position));
+                }
+            }
+        });
+
+    }
+
+    @Override
+    public int getItemCount() {
         return notificationList.size();
     }
 
-    @Override
-    public Object getItem(int i) {
-        return notificationList.get(i);
-    }
+    class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
-    @Override
-    public long getItemId(int i) {
-        return 0;
-    }
-    static class ViewHolder{
         ImageView imgv;
         TextView txtvTittle ;
         TextView txtvContent;
+        LinearLayout line;
+
+        private RecyclerViewHolder(final View itemView) {
+            super(itemView);
+            imgv = (ImageView) itemView.findViewById(R.id.imageView);
+            txtvTittle = (TextView) itemView.findViewById(R.id.txtvTittle);
+            txtvContent = (TextView) itemView.findViewById(R.id.txtvContent);
+            line = (LinearLayout) itemView.findViewById(R.id.notification_item_line);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, itemView.getId()+"", Toast.LENGTH_SHORT).show();
+                }
+            });
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+
+                    return true;
+                }
+            });
+        }
     }
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        final ViewHolder viewHolder;
-        View item = view;
-        if (view ==null){
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-            item = inflater.inflate(R.layout.notification_item_layout, null);
-            viewHolder = new ViewHolder();
-            viewHolder.imgv = (ImageView) item.findViewById(R.id.imageView);
-            viewHolder.txtvTittle = (TextView) item.findViewById(R.id.txtvTittle);
-            viewHolder.txtvContent = (TextView) item.findViewById(R.id.txtvContent);
-            item.setTag(viewHolder);
-        }
-        else{
-            viewHolder = (ViewHolder) item.getTag();
-        }
-
-        // gán giá trị
-        Notification notification = notificationList.get(i);
-        viewHolder.txtvTittle.setText(notification.getTittle());
-        viewHolder.txtvContent.setText(notification.getContent());
-        viewHolder.imgv.setImageResource(R.drawable.trasua);
-
-        return item;
+    public interface OnItemClickedListener {
+        void onItemClick(Notification notification);
+    }
+    public void setOnItemClickedListener(OnItemClickedListener onItemClickedListener) {
+        this.onItemClickedListener = onItemClickedListener;
     }
 }

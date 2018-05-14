@@ -3,11 +3,13 @@ package com.crush.crushappclient.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.Toast;
 
 import com.crush.crushappclient.R;
 import com.crush.crushappclient.adapter.NotificationAdapter;
@@ -21,7 +23,7 @@ import java.util.List;
  */
 public class NotificationFragment extends Fragment {
 
-    private ListView listView;
+    private RecyclerView recyclerView;
 
     public NotificationFragment() {
         // Required empty public constructor
@@ -32,10 +34,20 @@ public class NotificationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_notification, container, false);
-        listView = (ListView) rootView.findViewById(R.id.lvNotification);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerViewNotification);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
         List<Notification> notificationList = seedData.getNotificationList();
         NotificationAdapter adapter = new NotificationAdapter(getActivity(),notificationList);
-        listView.setAdapter(adapter);
+        adapter.setOnItemClickedListener(new NotificationAdapter.OnItemClickedListener() {
+            @Override
+            public void onItemClick(Notification notification) {
+                Toast.makeText(getActivity(),notification.getId()+"", Toast.LENGTH_SHORT).show();
+            }
+        });
+        recyclerView.setAdapter(adapter);
 
 
         return rootView;

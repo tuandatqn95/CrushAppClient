@@ -1,76 +1,96 @@
 package com.crush.crushappclient.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.crush.crushappclient.R;
 import com.crush.crushappclient.model.MainDrink;
+import com.crush.crushappclient.model.Notification;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainDrinkAdapter extends BaseAdapter {
+public class MainDrinkAdapter extends RecyclerView.Adapter<MainDrinkAdapter.RecyclerViewHolder> {
     private Context context;
     private List<MainDrink> listMainDrink;
+    private OnItemClickedListener onItemClickedListener;
+
     public MainDrinkAdapter(Context context, List<MainDrink> listMainDrink) {
         this.context = context;
         this.listMainDrink = listMainDrink;
     }
 
     @Override
-    public int getCount() {
+    public MainDrinkAdapter.RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+        View item = inflater.inflate(R.layout.product_item_layout, null);
+        return new MainDrinkAdapter.RecyclerViewHolder(item);
+    }
+
+    @Override
+    public void onBindViewHolder(MainDrinkAdapter.RecyclerViewHolder holder,int position) {
+        final MainDrink mainDrink = listMainDrink.get(position);
+        holder.txtvName.setText(mainDrink.getName());
+        holder.txtvPrice.setText(mainDrink.getPrice()+"");
+        holder.imgvProduct.setImageResource(R.drawable.trasua);
+        holder.line.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClickedListener != null) {
+                    onItemClickedListener.onItemClick(mainDrink);
+                }
+            }
+        });
+
+
+    }
+
+    @Override
+    public int getItemCount() {
         return listMainDrink.size();
     }
 
-    @Override
-    public Object getItem(int i) {
-        return listMainDrink.get(i);
-    }
+    class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
-    @Override
-    public long getItemId(int i) {
-        return 0;
-    }
-
-    static class ViewHolder {
         ImageView imgvProduct;
         TextView txtvName;
         TextView txtvPrice;
+        LinearLayout line;
+
+        public RecyclerViewHolder(View itemView) {
+            super(itemView);
+            imgvProduct = (ImageView) itemView.findViewById(R.id.imgvproduct);
+            txtvName = (TextView) itemView.findViewById(R.id.txtvname);
+            txtvPrice = (TextView) itemView.findViewById(R.id.txtvprice);
+            line = (LinearLayout) itemView.findViewById(R.id.product_item_line);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+
+                    return true;
+                }
+            });
+        }
     }
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        final ViewHolder viewHolder;
-        View item = view;
-        if (view == null){
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-            item = inflater.inflate(R.layout.product_item_layout, null);
-            viewHolder = new ViewHolder();
-            viewHolder.imgvProduct = (ImageView) item.findViewById(R.id.imgvproduct);
-            viewHolder.txtvName = (TextView) item.findViewById(R.id.txtvname);
-            viewHolder.txtvPrice = (TextView) item.findViewById(R.id.txtvprice);
-            item.setTag(viewHolder);
-        }
-        else{
-            viewHolder = (ViewHolder) item.getTag();
-        }
-
-
-
-        // gán giá trị
-        MainDrink mainDrink = listMainDrink.get(i);
-        viewHolder.txtvName.setText(mainDrink.getName());
-        viewHolder.txtvPrice.setText(mainDrink.getPrice()+"");
-        // byte array to imageView
-        //Bitmap imageProduct = BitmapFactory.decodeByteArray(mainDrink.getImage(), 0, mainDrink.getImage().length);
-        viewHolder.imgvProduct.setImageResource(R.drawable.trasua);
-
-        return item;
+    public interface OnItemClickedListener {
+        void onItemClick(MainDrink mainDrink);
     }
 
-
+    public void setOnItemClickedListener(OnItemClickedListener onItemClickedListener) {
+        this.onItemClickedListener = onItemClickedListener;
+    }
 }

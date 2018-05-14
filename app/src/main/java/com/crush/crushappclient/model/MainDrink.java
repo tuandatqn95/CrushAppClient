@@ -3,7 +3,9 @@ package com.crush.crushappclient.model;
 import android.media.Image;
 import android.widget.ImageView;
 
-public class MainDrink {
+import java.io.Serializable;
+
+public class MainDrink implements Serializable {
 
     private String name;
     private String price;

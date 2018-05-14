@@ -1,6 +1,7 @@
 package com.crush.crushappclient.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.crush.crushappclient.R;
+import com.crush.crushappclient.model.MainDrink;
 import com.crush.crushappclient.model.MenuProfile;
 import com.crush.crushappclient.model.Notification;
 
 import java.util.List;
 
-public class MenuProfileAdapter extends BaseAdapter {
+public class MenuProfileAdapter extends RecyclerView.Adapter<MenuProfileAdapter.MyViewHolder> {
     private Context context;
     private List<MenuProfile> menuProfileList;
 
@@ -22,46 +24,48 @@ public class MenuProfileAdapter extends BaseAdapter {
         this.context = context;
         this.menuProfileList = menuProfileList;
     }
+    @Override
+    public MenuProfileAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+        View item = inflater.inflate(R.layout.menu_profile_item_layout, null);
+        return new MenuProfileAdapter.MyViewHolder(item);
+    }
 
     @Override
-    public int getCount() {
+    public void onBindViewHolder(MenuProfileAdapter.MyViewHolder holder, int position) {
+        MenuProfile menuProfile = menuProfileList.get(position);
+        holder.txtvContent.setText(menuProfile.getContent());
+        holder.imgvIcon.setImageResource(R.drawable.ic_home_black_24dp);
+    }
+
+    @Override
+    public int getItemCount() {
         return menuProfileList.size();
     }
 
-    @Override
-    public Object getItem(int i) {
-        return null;
-    }
+    class MyViewHolder extends RecyclerView.ViewHolder {
 
-    @Override
-    public long getItemId(int i) {
-        return 0;
-    }
-    static class ViewHolder{
         ImageView imgvIcon;
         TextView txtvContent;
-    }
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        final ViewHolder viewHolder;
-        View item = view;
-        if (view ==null){
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-            item = inflater.inflate(R.layout.menu_profile_item_layout, null);
-            viewHolder = new ViewHolder();
-            viewHolder.imgvIcon = (ImageView) item.findViewById(R.id.imgvIcon);
-            viewHolder.txtvContent = (TextView) item.findViewById(R.id.txtvContent1);
-            item.setTag(viewHolder);
-        }
-        else{
-            viewHolder = (ViewHolder) item.getTag();
-        }
 
-        // gán giá trị
-        MenuProfile menuProfile = menuProfileList.get(i);
-        viewHolder.txtvContent.setText(menuProfile.getContent());
-        viewHolder.imgvIcon.setImageResource(R.drawable.ic_home_black_24dp);
+        public MyViewHolder(View itemView) {
+            super(itemView);
+            imgvIcon = (ImageView) itemView.findViewById(R.id.imgvIcon);
+            txtvContent = (TextView) itemView.findViewById(R.id.txtvContent1);
 
-        return item;
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+
+                    return true;
+                }
+            });
+        }
     }
 }

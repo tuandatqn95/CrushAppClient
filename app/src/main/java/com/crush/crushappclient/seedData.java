@@ -55,10 +55,10 @@ public class seedData {
         List<Notification> listNotification = new ArrayList<>();
 
         listNotification.add(new Notification(1,1,"Khuyến mãi 1","blalalalalalalal"));
-        listNotification.add(new Notification(1,1,"Khuyến mãi 1","blalalalalalalal"));
-        listNotification.add(new Notification(1,1,"Khuyến mãi 1","blalalalalalalal"));
-        listNotification.add(new Notification(1,1,"Khuyến mãi 1","blalalalalalalal"));
-        listNotification.add(new Notification(1,1,"Khuyến mãi 1","blalalalalalalal"));
+        listNotification.add(new Notification(2,1,"Khuyến mãi 1","blalalalalalalal"));
+        listNotification.add(new Notification(3,1,"Khuyến mãi 1","blalalalalalalal"));
+        listNotification.add(new Notification(4,1,"Khuyến mãi 1","blalalalalalalal"));
+        listNotification.add(new Notification(5,1,"Khuyến mãi 1","blalalalalalalal"));
 
         return listNotification;
 
