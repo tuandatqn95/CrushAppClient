@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.crush.crushappclient.ProductInfoActivity;
 import com.crush.crushappclient.R;
@@ -30,13 +31,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.droidsonroids.gif.GifTextView;
+
 
 public class TabProductFragment extends Fragment {
 
     private static final String TAG = TabProductFragment.class.getSimpleName();
 
     private static final String ARG_PARAM = "CATEGORY";
-
+    private GifTextView gifTextViewLoading;
     private RecyclerView recyclerViewProduct;
     private Category category;
     private List<MainDrink> mainDrinkList = new ArrayList<>();
@@ -57,14 +60,16 @@ public class TabProductFragment extends Fragment {
             Log.d(TAG, "Received: "+category.getId()+"-"+category.getName());
         }
         View rootView = inflater.inflate(R.layout.fragment_tab_product, container, false);
+        gifTextViewLoading = (GifTextView) rootView.findViewById(R.id.loadingGif);
+        gifTextViewLoading.setVisibility(View.VISIBLE);
         recyclerViewProduct = (RecyclerView) rootView.findViewById(R.id.recyclerViewProduct);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(),3);
         recyclerViewProduct.setLayoutManager(layoutManager);
         recyclerViewProduct.setItemAnimator(new DefaultItemAnimator());
         recyclerViewProduct.addItemDecoration(new SeparatorDecoration(getActivity(),Color.TRANSPARENT,3f));
 
-
         Log.d(TAG, category.getName());
+
         db.collection("categories").document(category.getId()).collection("maindrinks").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -74,6 +79,7 @@ public class TabProductFragment extends Fragment {
                         mainDrinkList.add(document.toObject(MainDrink.class));
                     }
                     setupRecyclerView(recyclerViewProduct, mainDrinkList);
+
                 }
             }
         });
@@ -96,6 +102,8 @@ public class TabProductFragment extends Fragment {
             }
         });
         recyclerView.setAdapter(adapter);
+        gifTextViewLoading.setVisibility(View.GONE);
+
     }
 
     public static TabProductFragment newInstance(Category category) {

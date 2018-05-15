@@ -24,12 +24,14 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.droidsonroids.gif.GifTextView;
+
 
 public class ProductFragment extends Fragment {
 
 
     private final String TAG = ProductFragment.class.getSimpleName();
-
+    private GifTextView gifTextViewLoading;
     private TabLayout tabLayout;
     private ViewPager viewPaper;
 
@@ -46,6 +48,8 @@ public class ProductFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_product, container, false);
+        gifTextViewLoading = (GifTextView) rootView.findViewById(R.id.loadingGif);
+        gifTextViewLoading.setVisibility(View.VISIBLE);
         viewPaper = (ViewPager) rootView.findViewById(R.id.viewPaper);
         tabLayout = (TabLayout) rootView.findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPaper);
@@ -59,8 +63,6 @@ public class ProductFragment extends Fragment {
                          Category category = new Category(document.getId(),document.getString("name"));
                         Log.d(TAG, "Get: "+category.getId()+"-"+category.getName());
                         categoryList.add(category);
-
-
                     }
                     Log.d(TAG, "Size: " + categoryList.size());
                     setupViewPaper(viewPaper, categoryList);
@@ -79,6 +81,7 @@ public class ProductFragment extends Fragment {
             adapter.addFragment(TabProductFragment.newInstance(category), category.getName());
         }
         viewPaper.setAdapter(adapter);
+        gifTextViewLoading.setVisibility(View.GONE);
     }
 
 

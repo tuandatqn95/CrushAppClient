@@ -17,9 +17,10 @@
         <android.support.design.widget.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/colorMainYellow"
             app:tabMode="scrollable"
+            android:layout_gravity="top"
             app:tabTextColor="@color/colorLightGray">
 
         </android.support.design.widget.TabLayout>
@@ -28,9 +29,21 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPaper"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+
 
 
          />
+    <pl.droidsonroids.gif.GifTextView
+        android:id="@+id/loadingGif"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="-350dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/loading"/>
+
+
+
 
 </LinearLayout>
