@@ -1,16 +1,21 @@
 package com.crush.crushappclient.model;
 
-public class Topping {
+import java.io.Serializable;
+
+public class  Topping implements Serializable {
     private String id;
     private String name;
-    private String price;
-    private String imageUrl;
+    private long price;
+    private String imageURL;
+    public Topping(){
 
-    public Topping(String id, String name, String price, String imageUrl) {
+    }
+
+    public Topping(String id, String name, long price, String imageURL) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.imageUrl = imageUrl;
+        this.imageURL = imageURL;
     }
 
     public String getId() {
@@ -29,19 +34,19 @@ public class Topping {
         this.name = name;
     }
 
-    public String getPrice() {
+    public long getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(long price) {
         this.price = price;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImageURL() {
+        return imageURL;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 }

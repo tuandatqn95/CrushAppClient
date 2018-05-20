@@ -54,15 +54,18 @@
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp" />
-            <TextView
-                android:id="@+id/txtvDateTime"
-                android:text="username "
+            <Spinner
+                android:id="@+id/spinnerDate"
+
                 android:layout_marginLeft="15dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content">
+
+            </Spinner>
         </LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
+
             android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

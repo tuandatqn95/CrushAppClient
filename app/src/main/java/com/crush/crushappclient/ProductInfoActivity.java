@@ -14,6 +14,7 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crush.crushappclient.DBHelper.ToppingHelper;
 import com.crush.crushappclient.adapter.NotificationAdapter;
 import com.crush.crushappclient.adapter.ToppingAdapter;
 import com.crush.crushappclient.model.MainDrink;
@@ -28,6 +29,7 @@ public class ProductInfoActivity extends AppCompatActivity {
     private LinearLayout linearLayout;
     private NumberPicker npQuantity;
     private RecyclerView recyclerView;
+    ToppingAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +37,7 @@ public class ProductInfoActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         init();
+        adapter.notifyDataSetChanged();
         getMainDrink();
 
     }
@@ -64,12 +67,12 @@ public class ProductInfoActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        List<Topping> toppings = seedData.getListTopping();
-        ToppingAdapter adapter = new ToppingAdapter(this,toppings);
+        List<Topping> toppings = ToppingHelper.getInstance().getTopping();
+        adapter = new ToppingAdapter(this,toppings);
         adapter.setOnItemClickedListener(new ToppingAdapter.OnItemClickedListener() {
             @Override
             public void onItemClick(Topping topping) {
-                Toast.makeText(ProductInfoActivity.this, topping.getPrice(), Toast.LENGTH_SHORT).show();
+
             }
         });
         recyclerView.setAdapter(adapter);

@@ -42,12 +42,8 @@ public class seedData {
     }
     public static List<Topping> getListTopping (){
         List<Topping> listTopping = new ArrayList<>();
-        listTopping.add(new Topping("11","pudding","10000",null));
-        listTopping.add(new Topping("22","pudding","12000",null));
-        listTopping.add(new Topping("33","pudding","13000",null));
-        listTopping.add(new Topping("44","pudding","14000",null));
-        listTopping.add(new Topping("55","pudding","15000",null));
-        listTopping.add(new Topping("66","pudding","16000",null));
+
+
 
         return listTopping;
     }
