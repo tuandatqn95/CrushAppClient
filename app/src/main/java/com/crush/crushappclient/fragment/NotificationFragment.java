@@ -33,6 +33,7 @@ public class NotificationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View rootView = inflater.inflate(R.layout.fragment_notification, container, false);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerViewNotification);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());

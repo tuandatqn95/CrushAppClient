@@ -1,61 +1,93 @@
 package com.crush.crushappclient.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.crush.crushappclient.R;
+import com.crush.crushappclient.model.Notification;
 import com.crush.crushappclient.model.Topping;
 
 import java.util.List;
 
-public class ToppingAdapter extends BaseAdapter {
+public class ToppingAdapter extends RecyclerView.Adapter<ToppingAdapter.RecyclerViewHolder> {
     private Context context;
-    private List<Topping> listTopping;
+    private List<Topping> toppingList;
+    private OnItemClickedListener onItemClickedListener;
 
-    public ToppingAdapter(Context context, List<Topping> listTopping) {
+    public ToppingAdapter(Context context, List<Topping> toppingList) {
         this.context = context;
-        this.listTopping = listTopping;
+        this.toppingList = toppingList;
     }
 
     @Override
-    public int getCount() {
-        return listTopping.size();
-    }
-
-    @Override
-    public Object getItem(int i) {
-        return listTopping.get(i);
-    }
-
-    @Override
-    public long getItemId(int i) {
-        return listTopping.get(i).getId();
-    }
-
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         View item = inflater.inflate(R.layout.topping_item_layout, null);
+        
+        return new RecyclerViewHolder(item);
+    }
 
-        ImageView imgvProduct = (ImageView) item.findViewById(R.id.imgvproduct);
-        TextView txtvName = (TextView) item.findViewById(R.id.txtvname);
-        TextView txtvPrice = (TextView) item.findViewById(R.id.txtvprice);
+    @Override
+    public void onBindViewHolder(RecyclerViewHolder holder,final int position) {
+        Topping topping = toppingList.get(position);
+        holder.imgvTopping.setImageResource(R.drawable.topping);
+        holder.txtvName.setText(topping.getName());
+        holder.txtvPrice.setText(topping.getPrice());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClickedListener != null) {
+                    onItemClickedListener.onItemClick(toppingList.get(position));
+                }
+            }
+        });
 
+    }
 
-        // gán giá trị
-        Topping topping = listTopping.get(i);
-        txtvName.setText(topping.getName());
-        txtvPrice.setText(topping.getPrice()+"");
-        // byte array to imageView
-        //Bitmap imageProduct = BitmapFactory.decodeByteArray(mainDrink.getImage(), 0, mainDrink.getImage().length);
-        imgvProduct.setImageResource(R.drawable.topping);
+    @Override
+    public int getItemCount() {
+        return toppingList.size();
+    }
 
-        return item;
+    class RecyclerViewHolder extends RecyclerView.ViewHolder {
+
+        ImageView imgvTopping;
+        TextView txtvName;
+        TextView txtvPrice;
+
+        private RecyclerViewHolder(final View itemView) {
+            super(itemView);
+            imgvTopping = (ImageView) itemView.findViewById(R.id.imgvtopping);
+            txtvName = (TextView) itemView.findViewById(R.id.txtvname);
+            txtvPrice = (TextView) itemView.findViewById(R.id.txtvprice);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, itemView.getHeight()+"", Toast.LENGTH_SHORT).show();
+                }
+            });
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+
+                    return true;
+                }
+            });
+        }
+    }
+    public interface OnItemClickedListener {
+        void onItemClick(Topping topping);
+    }
+    public void setOnItemClickedListener(ToppingAdapter.OnItemClickedListener onItemClickedListener) {
+        this.onItemClickedListener = onItemClickedListener;
     }
 
 

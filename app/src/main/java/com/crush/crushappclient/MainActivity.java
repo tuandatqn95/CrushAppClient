@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
 
     private ViewPager viewPaper;
 
-
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -47,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         viewPaper = (ViewPager) findViewById(R.id.navigationViewPaper);
-
 
         setupViewPaper(viewPaper);
         final BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);

@@ -62,6 +62,7 @@ public class TabProductFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_tab_product, container, false);
         gifTextViewLoading = (GifTextView) rootView.findViewById(R.id.loadingGif);
         gifTextViewLoading.setVisibility(View.VISIBLE);
+
         recyclerViewProduct = (RecyclerView) rootView.findViewById(R.id.recyclerViewProduct);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(),3);
         recyclerViewProduct.setLayoutManager(layoutManager);

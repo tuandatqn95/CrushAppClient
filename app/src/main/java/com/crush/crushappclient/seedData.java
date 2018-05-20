@@ -42,12 +42,12 @@ public class seedData {
     }
     public static List<Topping> getListTopping (){
         List<Topping> listTopping = new ArrayList<>();
-        listTopping.add(new Topping(11,"pudding",10000,null));
-        listTopping.add(new Topping(22,"pudding",12000,null));
-        listTopping.add(new Topping(33,"pudding",13000,null));
-        listTopping.add(new Topping(44,"pudding",14000,null));
-        listTopping.add(new Topping(55,"pudding",15000,null));
-        listTopping.add(new Topping(66,"pudding",16000,null));
+        listTopping.add(new Topping("11","pudding","10000",null));
+        listTopping.add(new Topping("22","pudding","12000",null));
+        listTopping.add(new Topping("33","pudding","13000",null));
+        listTopping.add(new Topping("44","pudding","14000",null));
+        listTopping.add(new Topping("55","pudding","15000",null));
+        listTopping.add(new Topping("66","pudding","16000",null));
 
         return listTopping;
     }
@@ -70,11 +70,11 @@ public class seedData {
     public static List<MenuProfile> getmenuProfileList(){
         List<MenuProfile> menuProfileList = new ArrayList<>();
 
-        menuProfileList.add(new MenuProfile(1,"Quản lý tài khoảng"));
-        menuProfileList.add(new MenuProfile(1,"Lịch sử đơn hàng"));
-        menuProfileList.add(new MenuProfile(1,"Giới thiệu"));
-        menuProfileList.add(new MenuProfile(1,"Cài đặt cấu hình"));
-        menuProfileList.add(new MenuProfile(1,"Hỗ trợ"));
+        menuProfileList.add(new MenuProfile(R.drawable.icons8_user_50px,"Quản lý tài khoản"));
+        menuProfileList.add(new MenuProfile(R.drawable.icons8_order_history_50px,"Lịch sử đơn hàng"));
+        menuProfileList.add(new MenuProfile(R.drawable.icons8_info_50px,"Giới thiệu"));
+        menuProfileList.add(new MenuProfile(R.drawable.icons8_settings_50px,"Cài đặt cấu hình"));
+        menuProfileList.add(new MenuProfile(R.drawable.icons8_whatsapp_50px,"Hỗ trợ"));
 
         return menuProfileList;
 

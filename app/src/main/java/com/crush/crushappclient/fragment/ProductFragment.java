@@ -46,7 +46,6 @@ public class ProductFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View rootView = inflater.inflate(R.layout.fragment_product, container, false);
         gifTextViewLoading = (GifTextView) rootView.findViewById(R.id.loadingGif);
         gifTextViewLoading.setVisibility(View.VISIBLE);

@@ -3,6 +3,9 @@ package com.crush.crushappclient;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -11,14 +14,20 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crush.crushappclient.adapter.NotificationAdapter;
 import com.crush.crushappclient.adapter.ToppingAdapter;
 import com.crush.crushappclient.model.MainDrink;
+import com.crush.crushappclient.model.Notification;
+import com.crush.crushappclient.model.Topping;
+
+import java.util.List;
 
 public class ProductInfoActivity extends AppCompatActivity {
-    TextView txtvName,txtvPrice;
-    ImageView imgvDrink;
-    LinearLayout linearLayout;
-    NumberPicker npQuantity;
+    private TextView txtvName,txtvPrice;
+    private ImageView imgvDrink;
+    private LinearLayout linearLayout;
+    private NumberPicker npQuantity;
+    private RecyclerView recyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,21 +52,27 @@ public class ProductInfoActivity extends AppCompatActivity {
         txtvName = (TextView) findViewById(R.id.txtvdrinkName);
         txtvPrice = (TextView) findViewById(R.id.txtvdrinkPrice);
         imgvDrink = (ImageView) findViewById(R.id.imageViewDrink);
-        linearLayout = (LinearLayout) findViewById(R.id.horizontalLinear);
+
         npQuantity = (NumberPicker) findViewById(R.id.numberPickerQuantity);
         npQuantity.setMinValue(1);
         npQuantity.setMaxValue(50);
-        final ToppingAdapter toppingAdapter = new ToppingAdapter(this,seedData.getListTopping());
-        for(int i=0;i<toppingAdapter.getCount();i++){
-            final View viewItem = toppingAdapter.getView(i,null,null);
-            linearLayout.addView(viewItem);
-            viewItem.setId((int) toppingAdapter.getItemId(i));
-            viewItem.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(ProductInfoActivity.this, + viewItem.getId()+"", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
+
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerViewTopping);
+        LinearLayoutManager layoutManager
+                = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        List<Topping> toppings = seedData.getListTopping();
+        ToppingAdapter adapter = new ToppingAdapter(this,toppings);
+        adapter.setOnItemClickedListener(new ToppingAdapter.OnItemClickedListener() {
+            @Override
+            public void onItemClick(Topping topping) {
+                Toast.makeText(ProductInfoActivity.this, topping.getPrice(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        recyclerView.setAdapter(adapter);
+
     }
 }

@@ -9,7 +9,7 @@ public class MainDrink implements Serializable {
 
     private String name;
     private String price;
-    private String image;
+    private String imageUrl;
     private String categoryId;
 
     public MainDrink(){}
@@ -18,7 +18,7 @@ public class MainDrink implements Serializable {
 
         this.name = name;
         this.price = price;
-        this.image = image;
+        this.imageUrl = image;
         this.categoryId = categoryId;
     }
     public String getName() {
@@ -38,11 +38,11 @@ public class MainDrink implements Serializable {
     }
 
     public String getImage() {
-        return image;
+        return imageUrl;
     }
 
     public void setImage(String image) {
-        this.image = image;
+        this.imageUrl = image;
     }
 
     public String getCategoryId() {

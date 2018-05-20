@@ -38,7 +38,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         holder.imgv.setImageResource(R.drawable.trasua);
         holder.txtvTittle.setText(notification.getTittle());
         holder.txtvContent.setText(notification.getContent());
-        holder.line.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (onItemClickedListener != null) {
@@ -59,14 +59,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         ImageView imgv;
         TextView txtvTittle ;
         TextView txtvContent;
-        LinearLayout line;
 
         private RecyclerViewHolder(final View itemView) {
             super(itemView);
             imgv = (ImageView) itemView.findViewById(R.id.imageView);
             txtvTittle = (TextView) itemView.findViewById(R.id.txtvTittle);
             txtvContent = (TextView) itemView.findViewById(R.id.txtvContent);
-            line = (LinearLayout) itemView.findViewById(R.id.notification_item_line);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

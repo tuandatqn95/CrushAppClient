@@ -38,14 +38,11 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
-        recyclerViewMenuProfile = (RecyclerView) rootView.findViewById(R.id.recyclerViewMenuProfile);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerViewMenuProfile.setLayoutManager(layoutManager);
-        recyclerViewMenuProfile.setItemAnimator(new DefaultItemAnimator());
+        lvMenu = (ListView) rootView.findViewById(R.id.lvMenuProfile);
 
         List<MenuProfile> menuProfileList = seedData.getmenuProfileList();
         MenuProfileAdapter adapter = new MenuProfileAdapter(getActivity(),menuProfileList);
-        recyclerViewMenuProfile.setAdapter(adapter);
+        lvMenu.setAdapter(adapter);
 
         return rootView;
     }

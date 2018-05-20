@@ -1,23 +1,23 @@
 package com.crush.crushappclient.model;
 
 public class Topping {
-    private int id;
+    private String id;
     private String name;
-    private int price;
-    private byte[] image;
+    private String price;
+    private String imageUrl;
 
-    public Topping(int id, String name, int price, byte[] image) {
+    public Topping(String id, String name, String price, String imageUrl) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.image = image;
+        this.imageUrl = imageUrl;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -29,19 +29,19 @@ public class Topping {
         this.name = name;
     }
 
-    public int getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
-    public byte[] getImage() {
-        return image;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
