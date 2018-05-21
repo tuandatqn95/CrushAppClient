@@ -1,7 +1,9 @@
-package com.crush.crushappclient;
+package com.crush.crushappclient.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.crush.crushappclient.R;
 
 public class ProfileActivity extends AppCompatActivity {
 

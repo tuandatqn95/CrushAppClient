@@ -8,19 +8,19 @@ import java.io.Serializable;
 public class MainDrink implements Serializable {
 
     private String name;
-    private String price;
+    private long price;
     private String imageUrl;
     private String categoryId;
 
     public MainDrink(){}
 
-    public MainDrink(String name, String price, String image, String categoryId) {
-
+    public MainDrink(String name, long price, String imageUrl, String categoryId) {
         this.name = name;
         this.price = price;
-        this.imageUrl = image;
+        this.imageUrl = imageUrl;
         this.categoryId = categoryId;
     }
+
     public String getName() {
         return name;
     }
@@ -29,20 +29,20 @@ public class MainDrink implements Serializable {
         this.name = name;
     }
 
-    public String getPrice() {
+    public long getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(long price) {
         this.price = price;
     }
 
-    public String getImage() {
+    public String getImageUrl() {
         return imageUrl;
     }
 
-    public void setImage(String image) {
-        this.imageUrl = image;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getCategoryId() {

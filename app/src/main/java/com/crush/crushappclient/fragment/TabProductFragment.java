@@ -13,9 +13,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.crush.crushappclient.ProductInfoActivity;
+import com.crush.crushappclient.activity.ProductInfoActivity;
 import com.crush.crushappclient.R;
 import com.crush.crushappclient.SeparatorDecoration;
 import com.crush.crushappclient.adapter.MainDrinkAdapter;
@@ -94,7 +93,7 @@ public class TabProductFragment extends Fragment {
         adapter.setOnItemClickedListener(new MainDrinkAdapter.OnItemClickedListener() {
             @Override
             public void onItemClick(MainDrink mainDrink) {
-                if(mainDrink.getName()==null || mainDrink.getPrice()==null){
+                if(mainDrink.getName()==null){
                     return;
                 }
                 Intent intent = new Intent(getActivity(),ProductInfoActivity.class);

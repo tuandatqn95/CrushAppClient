@@ -1,32 +1,38 @@
 package com.crush.crushappclient.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class OrderItem {
-    private int id;
-    private int mainDrinkId;
+
+    private MainDrink mainDrink;
+    private List<Topping> toppingList;
     private int quantity;
-    private int orderId;
 
-    public OrderItem(int id, int mainDrinkId, int quantity, int orderId) {
-        this.id = id;
-        this.mainDrinkId = mainDrinkId;
+    public OrderItem(MainDrink mainDrink, List<Topping> toppingList, int quantity) {
+        this.mainDrink = mainDrink;
+        this.toppingList = toppingList;
         this.quantity = quantity;
-        this.orderId = orderId;
     }
 
-    public int getId() {
-        return id;
+    public OrderItem() {
+        toppingList = new ArrayList<>();
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public MainDrink getMainDrink() {
+        return mainDrink;
     }
 
-    public int getMainDrinkId() {
-        return mainDrinkId;
+    public void setMainDrink(MainDrink mainDrink) {
+        this.mainDrink = mainDrink;
     }
 
-    public void setMainDrinkId(int mainDrinkId) {
-        this.mainDrinkId = mainDrinkId;
+    public List<Topping> getToppingList() {
+        return toppingList;
+    }
+
+    public void setToppingList(List<Topping> toppingList) {
+        this.toppingList = toppingList;
     }
 
     public int getQuantity() {
@@ -37,11 +43,11 @@ public class OrderItem {
         this.quantity = quantity;
     }
 
-    public int getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
+    public long getPrice() {
+        long price = mainDrink.getPrice();
+        for (Topping topping : toppingList) {
+            price += topping.getPrice();
+        }
+        return price;
     }
 }

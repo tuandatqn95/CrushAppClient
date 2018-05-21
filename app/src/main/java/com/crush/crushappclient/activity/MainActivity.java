@@ -1,4 +1,4 @@
-package com.crush.crushappclient;
+package com.crush.crushappclient.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,11 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.crush.crushappclient.DBHelper.CategoryDBHelper;
+import com.crush.crushappclient.DBHelper.MainDrinkDBHelper;
+import com.crush.crushappclient.DBHelper.NotificationDBHelper;
+import com.crush.crushappclient.DBHelper.ToppingHelper;
+import com.crush.crushappclient.R;
 import com.crush.crushappclient.adapter.BottomNavigationPageAdapter;
 import com.crush.crushappclient.fragment.NotificationFragment;
 import com.crush.crushappclient.fragment.ProductFragment;
@@ -78,6 +83,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        CategoryDBHelper.getInstance().update();
+        ToppingHelper.getInstance().update();
+        MainDrinkDBHelper.getInstance().update();
+        NotificationDBHelper.getInstance().update();
     }
 
     private void setupViewPaper(ViewPager viewPaper) {

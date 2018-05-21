@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.crush.crushappclient.DBHelper.CategoryDBHelper;
 import com.crush.crushappclient.R;
 import com.crush.crushappclient.adapter.TabViewPaperAdapter;
 import com.crush.crushappclient.model.Category;
@@ -53,23 +54,23 @@ public class ProductFragment extends Fragment {
         tabLayout = (TabLayout) rootView.findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPaper);
 
-        db.collection("categories").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isComplete()) {
-                    List<Category> categoryList = new ArrayList<>();
-                    for (final QueryDocumentSnapshot document : task.getResult()) {
-                         Category category = new Category(document.getId(),document.getString("name"));
-                        Log.d(TAG, "Get: "+category.getId()+"-"+category.getName());
-                        categoryList.add(category);
-                    }
-                    Log.d(TAG, "Size: " + categoryList.size());
-                    setupViewPaper(viewPaper, categoryList);
-                }
-            }
-        });
-
-
+//        db.collection("categories").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if (task.isComplete()) {
+//                    List<Category> categoryList = new ArrayList<>();
+//                    for (final QueryDocumentSnapshot document : task.getResult()) {
+//                         Category category = new Category(document.getId(),document.getString("name"));
+//                        Log.d(TAG, "Get: "+category.getId()+"-"+category.getName());
+//                        categoryList.add(category);
+//                    }
+//                    Log.d(TAG, "Size: " + categoryList.size());
+//                    setupViewPaper(viewPaper, categoryList);
+//                }
+//            }
+//        });
+        List<Category> categoryList = CategoryDBHelper.getInstance().gets();
+        setupViewPaper(viewPaper, categoryList);
         return rootView;
     }
 

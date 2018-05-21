@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,15 +24,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".activity.LoginActivity"
             android:label="@string/title_activity_login" />
         <activity
             android:name=".ScrollingActivity"
             android:label="@string/title_activity_scrolling"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ProductInfoActivity" />
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".ProfileManagerActivity"></activity>
+        <activity android:name=".activity.ProductInfoActivity" />
+        <activity android:name=".activity.ProfileActivity" />
+        <activity android:name=".activity.ProfileManagerActivity" />
     </application>
 
 </manifest>

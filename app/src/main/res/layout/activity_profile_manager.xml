@@ -41,7 +41,8 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp" />
             <EditText
-                android:hint="username"
+                android:id="@+id/edtname"
+                android:hint="name"
                 android:layout_marginLeft="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -56,8 +57,7 @@
                 android:layout_height="40dp" />
             <Spinner
                 android:id="@+id/spinnerDate"
-
-                android:layout_marginLeft="15dp"
+                android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -74,7 +74,7 @@
                 android:layout_height="40dp" />
             <Spinner
                 android:id="@+id/spinnerSex"
-                android:layout_marginLeft="15dp"
+                android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -86,14 +86,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
+                android:src="@drawable/icons8_whatsapp_50px"
                 android:layout_width="40dp"
                 android:layout_height="40dp" />
+
             <TextView
                 android:id="@+id/txtvPhone"
-                android:text="0123456789 "
-                android:layout_marginLeft="15dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="0123456789 " />
         </LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
@@ -104,6 +106,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp" />
             <EditText
+                android:id="@+id/edtemail"
                 android:hint="email"
                 android:layout_marginLeft="15dp"
                 android:layout_width="match_parent"

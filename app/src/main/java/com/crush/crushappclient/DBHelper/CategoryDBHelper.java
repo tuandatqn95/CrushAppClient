@@ -1,7 +1,6 @@
 package com.crush.crushappclient.DBHelper;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.crush.crushappclient.model.Category;
 import com.crush.crushappclient.model.Topping;
@@ -14,45 +13,37 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ToppingHelper {
+public class CategoryDBHelper {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private List<Topping> toppingList;
-    private static ToppingHelper instance;
+    private List<Category> categoryList;
+    private static CategoryDBHelper instance;
 
-    private ToppingHelper(){
-        toppingList = new ArrayList<>();
+    private CategoryDBHelper(){
+        categoryList = new ArrayList<>();
     }
-
-    public static synchronized ToppingHelper getInstance(){
-
+    public static synchronized CategoryDBHelper getInstance(){
         if(instance==null){
-            instance = new ToppingHelper();
+            instance = new CategoryDBHelper();
         }
 
         return instance;
     }
-
     public void update(){
-
-        toppingList.clear();
-        db.collection("toppings").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        categoryList.clear();
+        db.collection("categories").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isComplete()){
                     for (final QueryDocumentSnapshot document : task.getResult()) {
-                        Topping topping = document.toObject(Topping.class);
-                        topping.setId(document.getId());
-                        toppingList.add(topping);
+                        Category category = document.toObject(Category.class);
+                        category.setId(document.getId());
+                        categoryList.add(category);
                     }
                 }
             }
         });
     }
-
-    public List<Topping> gets(){
-
-        return toppingList;
+    public List<Category> gets(){
+        return categoryList;
     }
-
-
 }

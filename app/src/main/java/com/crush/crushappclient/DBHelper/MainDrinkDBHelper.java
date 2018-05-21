@@ -1,9 +1,8 @@
 package com.crush.crushappclient.DBHelper;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
-import com.crush.crushappclient.model.Category;
+import com.crush.crushappclient.model.MainDrink;
 import com.crush.crushappclient.model.Topping;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -14,45 +13,39 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ToppingHelper {
+public class MainDrinkDBHelper {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private List<Topping> toppingList;
-    private static ToppingHelper instance;
+    private List<MainDrink> mainDrinkList;
+    private static MainDrinkDBHelper instance;
 
-    private ToppingHelper(){
-        toppingList = new ArrayList<>();
+    private MainDrinkDBHelper(){
+        mainDrinkList = new ArrayList<>();
+
     }
-
-    public static synchronized ToppingHelper getInstance(){
+    public static synchronized MainDrinkDBHelper getInstance(){
 
         if(instance==null){
-            instance = new ToppingHelper();
+            instance = new MainDrinkDBHelper();
         }
 
         return instance;
     }
-
     public void update(){
-
-        toppingList.clear();
-        db.collection("toppings").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        mainDrinkList.clear();
+        db.collection("maindrinks").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isComplete()){
                     for (final QueryDocumentSnapshot document : task.getResult()) {
-                        Topping topping = document.toObject(Topping.class);
-                        topping.setId(document.getId());
-                        toppingList.add(topping);
+                        MainDrink mainDrink = document.toObject(MainDrink.class);
+                        //mainDrink.setCategoryId(document.getId());
+                        mainDrinkList.add(mainDrink);
                     }
                 }
             }
         });
     }
-
-    public List<Topping> gets(){
-
-        return toppingList;
+    public List<MainDrink> gets() {
+        return mainDrinkList;
     }
-
-
 }
