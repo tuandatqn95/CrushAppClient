@@ -6,6 +6,7 @@
     android:background="#F2F2F2"
     android:orientation="vertical"
     tools:context=".fragment.TabProductFragment">
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewProduct"
         android:paddingTop="5dp"

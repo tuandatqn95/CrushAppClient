@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 
 import com.crush.crushappclient.activity.ProductInfoActivity;
 import com.crush.crushappclient.R;
-import com.crush.crushappclient.SeparatorDecoration;
+import com.crush.crushappclient.ClassSupport.SeparatorDecoration;
 import com.crush.crushappclient.adapter.MainDrinkAdapter;
 import com.crush.crushappclient.model.Category;
 import com.crush.crushappclient.model.MainDrink;

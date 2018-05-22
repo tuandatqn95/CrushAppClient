@@ -2,118 +2,162 @@
 <LinearLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#F2F2F2"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <LinearLayout
-        android:orientation="vertical"
+    <RelativeLayout
+        android:id="@+id/restaurant_top_card"
         android:layout_width="match_parent"
-        android:background="@drawable/gradient_layout"
-        android:layout_height="160dp">
+        android:layout_height="wrap_content"
+        android:elevation="4dp">
+        <ImageView
+            android:id="@+id/imageViewDrink"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:alpha="1.0"
+            android:scaleType="centerCrop"
+            android:src="@drawable/tocotocoview" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/gradient_up" />
+
+        <!-- Back button -->
+        <ImageView
+            android:src="@drawable/icons8_back_50px_1"
+            android:layout_margin="10dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp" />
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:scaleType="fitCenter"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:src="@mipmap/ic_launcher_round" />
+            android:layout_marginTop="50dp"
+            android:src="@drawable/crush_logo" />
 
-
-        <Button
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:text="Cập nhật"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
+    </RelativeLayout>
     <LinearLayout
         android:orientation="vertical"
+        android:background="#F2F2F2"
+        android:padding="15dp"
+        android:layout_weight="10"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
         <LinearLayout
             android:orientation="horizontal"
-            android:padding="10dp"
+            android:padding="1dp"
+            android:layout_margin="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp" />
+                android:src="@drawable/icons8_user_50px"
+                android:layout_margin="10dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
             <EditText
                 android:id="@+id/edtname"
-                android:hint="name"
+                android:hint="Họ và tên"
                 android:layout_marginLeft="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
-            android:padding="10dp"
+            android:padding="1dp"
+            android:layout_margin="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp" />
-            <Spinner
-                android:id="@+id/spinnerDate"
+                android:src="@drawable/icons8_birthday_50px"
                 android:layout_margin="10dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+            <TextView
+                android:id="@+id/txtvdate"
+                android:textSize="17dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:text="21/5/2018" />
 
-            </Spinner>
         </LinearLayout>
         <LinearLayout
-            android:orientation="horizontal"
-
-            android:padding="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp" />
+                android:layout_width="20dp"
+                android:layout_height="22dp"
+                android:layout_margin="20dp"
+                android:src="@drawable/icons8_gender_50px_1" />
+
             <Spinner
                 android:id="@+id/spinnerSex"
-                android:layout_margin="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
 
             </Spinner>
         </LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
-            android:padding="10dp"
+            android:padding="1dp"
+            android:layout_margin="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
                 android:src="@drawable/icons8_whatsapp_50px"
-                android:layout_width="40dp"
-                android:layout_height="40dp" />
+                android:layout_margin="10dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
 
             <TextView
                 android:id="@+id/txtvPhone"
+                android:textSize="17dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
                 android:text="0123456789 " />
         </LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
-            android:padding="10dp"
+            android:padding="1dp"
+            android:layout_margin="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp" />
+                android:src="@drawable/icons8_gmail_50px"
+                android:layout_margin="10dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
             <EditText
                 android:id="@+id/edtemail"
-                android:hint="email"
+                android:hint="Email"
                 android:layout_marginLeft="15dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress" />
         </LinearLayout>
 
-
     </LinearLayout>
+    <Button
+        android:id="@+id/btnupdate"
+        android:text="Cập nhật"
+        android:background="@color/colorMainYellow"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
 
 </LinearLayout>

@@ -9,15 +9,15 @@ public class MainDrink implements Serializable {
 
     private String name;
     private long price;
-    private String imageUrl;
+    private String imageURL;
     private String categoryId;
 
     public MainDrink(){}
 
-    public MainDrink(String name, long price, String imageUrl, String categoryId) {
+    public MainDrink(String name, long price, String imageURL, String categoryId) {
         this.name = name;
         this.price = price;
-        this.imageUrl = imageUrl;
+        this.imageURL = imageURL;
         this.categoryId = categoryId;
     }
 
@@ -37,12 +37,12 @@ public class MainDrink implements Serializable {
         this.price = price;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImageURL() {
+        return imageURL;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public String getCategoryId() {

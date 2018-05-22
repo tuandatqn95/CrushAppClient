@@ -1,4 +1,4 @@
-package com.crush.crushappclient;
+package com.crush.crushappclient.ClassSupport;
 
 import android.content.Context;
 import android.graphics.Canvas;

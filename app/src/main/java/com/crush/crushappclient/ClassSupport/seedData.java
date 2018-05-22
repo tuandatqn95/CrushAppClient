@@ -1,10 +1,10 @@
-package com.crush.crushappclient;
+package com.crush.crushappclient.ClassSupport;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.widget.ImageView;
 
-import com.crush.crushappclient.model.Category;
+import com.crush.crushappclient.R;
 import com.crush.crushappclient.model.MainDrink;
 import com.crush.crushappclient.model.MenuProfile;
 import com.crush.crushappclient.model.Notification;
@@ -20,23 +20,6 @@ public class seedData {
 
     public static List<MainDrink> getMainDrink(){
         List<MainDrink> list = new ArrayList<>();
-
-//        list.add(new MainDrink(1,"Trà sữa truyền thống",20000,R.drawable.trasua,1));
-//        list.add(new MainDrink(1,"Trà sữa thái xanh",21000,R.drawable.trasua,1));
-//        list.add(new MainDrink(1,"Trà sữa dâu tây",22000,R.drawable.trasua,1));
-//        list.add(new MainDrink(1,"Trà sữa socola",23000,R.drawable.trasua,1));
-//        list.add(new MainDrink(1,"Trà sữa thái xanh",21000,R.drawable.trasua,1));
-//        list.add(new MainDrink(1,"Trà sữa dâu tây",22000,R.drawable.trasua,1));
-//        list.add(new MainDrink(1,"Trà sữa socola",23000,R.drawable.trasua,1));
-//        list.add(new MainDrink(1,"Trà sữa thái xanh",21000,R.drawable.trasua,1));
-//        list.add(new MainDrink(1,"Trà sữa dâu tây",22000,R.drawable.trasua,1));
-//        list.add(new MainDrink(1,"Trà sữa socola",23000,R.drawable.trasua,1));
-//        list.add(new MainDrink(1,"Trà sữa thái xanh",21000,R.drawable.trasua,1));
-//        list.add(new MainDrink(1,"Trà sữa dâu tây",22000,R.drawable.trasua,1));
-//        list.add(new MainDrink(1,"Trà sữa socola",23000,R.drawable.trasua,1));
-//        list.add(new MainDrink(1,"Trà sữa thái xanh",21000,R.drawable.trasua,1));
-//        list.add(new MainDrink(1,"Trà sữa dâu tây",22000,R.drawable.trasua,1));
-//        list.add(new MainDrink(1,"Trà sữa socola",23000,R.drawable.trasua,1));
 
         return list;
     }

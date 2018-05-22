@@ -10,9 +10,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.crush.crushappclient.R;
 import com.crush.crushappclient.model.MainDrink;
 import com.crush.crushappclient.model.Notification;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,9 +39,9 @@ public class MainDrinkAdapter extends RecyclerView.Adapter<MainDrinkAdapter.Recy
     @Override
     public void onBindViewHolder(MainDrinkAdapter.RecyclerViewHolder holder,int position) {
         final MainDrink mainDrink = listMainDrink.get(position);
+        Glide.with(context).load(mainDrink.getImageURL()).placeholder(R.drawable.show_loader).into(holder.imgvProduct);
         holder.txtvName.setText(mainDrink.getName());
         holder.txtvPrice.setText(mainDrink.getPrice()+"");
-        holder.imgvProduct.setImageResource(R.drawable.trasua);
         holder.line.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

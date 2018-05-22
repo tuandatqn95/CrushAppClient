@@ -21,14 +21,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ToppingAdapter extends RecyclerView.Adapter<ToppingAdapter.RecyclerViewHolder> {
+public class ToppingAdapter2 extends RecyclerView.Adapter<ToppingAdapter2.RecyclerViewHolder> {
     private Context context;
     private List<Topping> toppingList;
-    private OnItemClickedListener onItemClickedListener;
     private List<Integer> selectedPosition = new ArrayList<>();
     private OnToppingClickedListener mListener;
 
-    public ToppingAdapter(Context context) {
+    public ToppingAdapter2(Context context) {
         this.context = context;
         this.toppingList = ToppingHelper.getInstance().gets();
     }
@@ -60,7 +59,7 @@ public class ToppingAdapter extends RecyclerView.Adapter<ToppingAdapter.Recycler
                     }
                 } else {
                     if (selectedPosition.indexOf(position) < 0)
-                    selectedPosition.add(position);
+                        selectedPosition.add(position);
                     if (mListener != null) {
                         mListener.OnSelected(toppingList.get(position));
                     }
@@ -104,16 +103,4 @@ public class ToppingAdapter extends RecyclerView.Adapter<ToppingAdapter.Recycler
         }
     }
 
-    public interface OnItemClickedListener {
-        void onItemClick(Topping topping);
-
-    }
-
-    public void setOnItemClickedListener(ToppingAdapter.OnItemClickedListener onItemClickedListener) {
-        this.onItemClickedListener = onItemClickedListener;
-    }
-
-    public void setOnToppingClickedListener(OnToppingClickedListener mListener) {
-        this.mListener = mListener;
-    }
 }

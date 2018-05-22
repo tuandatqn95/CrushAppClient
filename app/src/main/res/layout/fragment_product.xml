@@ -7,12 +7,30 @@
     android:orientation="vertical"
     tools:context=".fragment.ProductFragment">
 
+
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme">
 
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#383838">
+            <ImageView
+                android:src="@drawable/crush_logo_yellow"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+            <TextView
+                android:text="Crush Milk Tea"
+                android:layout_marginLeft="30dp"
+                android:textColor="@color/colorMainYellow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </android.support.v7.widget.Toolbar>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabLayout"
@@ -42,8 +60,5 @@
         android:layout_marginTop="-350dp"
         android:layout_centerInParent="true"
         android:background="@drawable/loading"/>
-
-
-
 
 </LinearLayout>

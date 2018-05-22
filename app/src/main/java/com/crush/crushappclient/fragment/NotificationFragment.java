@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.crush.crushappclient.R;
 import com.crush.crushappclient.adapter.NotificationAdapter;
 import com.crush.crushappclient.model.Notification;
-import com.crush.crushappclient.seedData;
+import com.crush.crushappclient.ClassSupport.seedData;
 
 import java.util.List;
 

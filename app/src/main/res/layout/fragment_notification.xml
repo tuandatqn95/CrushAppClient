@@ -5,9 +5,24 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical"
-
     tools:context=".fragment.NotificationFragment">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#383838">
+        <ImageView
+            android:src="@drawable/crush_logo_yellow"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+        <TextView
+            android:text="Crush Milk Tea"
+            android:layout_marginLeft="30dp"
+            android:textColor="@color/colorMainYellow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </android.support.v7.widget.Toolbar>
     <!-- TODO: Update blank fragment layout -->
 
     <android.support.v7.widget.RecyclerView
