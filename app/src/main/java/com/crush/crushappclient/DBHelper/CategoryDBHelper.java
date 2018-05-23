@@ -36,7 +36,6 @@ public class CategoryDBHelper {
                 if(task.isComplete()){
                     for (final QueryDocumentSnapshot document : task.getResult()) {
                         Category category = document.toObject(Category.class);
-                        category.setId(document.getId());
                         categoryList.add(category);
                     }
                 }

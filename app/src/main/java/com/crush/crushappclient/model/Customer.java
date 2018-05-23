@@ -3,14 +3,18 @@ package com.crush.crushappclient.model;
 public class Customer {
     private int id;
     private String name;
+    private String address;
     private String email;
     private String phone;
     private String sex;
     private String password;
 
-    public Customer(int id, String name, String email, String phone, String sex, String password) {
+    public Customer (){}
+
+    public Customer(int id, String name, String address, String email, String phone, String sex, String password) {
         this.id = id;
         this.name = name;
+        this.address = address;
         this.email = email;
         this.phone = phone;
         this.sex = sex;
@@ -31,6 +35,14 @@ public class Customer {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getEmail() {

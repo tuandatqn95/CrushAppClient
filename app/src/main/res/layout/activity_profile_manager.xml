@@ -77,6 +77,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
+                android:src="@drawable/icons8_address_book_50px_2"
+                android:layout_margin="10dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+            <EditText
+                android:id="@+id/edtaddress"
+                android:hint="Địa chỉ"
+                android:layout_marginLeft="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:padding="1dp"
+            android:layout_margin="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
                 android:src="@drawable/icons8_birthday_50px"
                 android:layout_margin="10dp"
                 android:layout_width="20dp"

@@ -3,24 +3,28 @@ package com.crush.crushappclient.model;
 import java.io.Serializable;
 
 public class Category implements Serializable {
-    private String id;
+    public static final String KEY_CATEGORY_NAME = "name";
+    private String imageURL ;
     private String name;
 
     public Category() {
     }
 
-    public Category(String id, String name ) {
-        this.setId(id);
-        this.setName(name);
+    public Category(String imageURL, String name) {
+        this.imageURL = imageURL;
+        this.name = name;
     }
 
-
-    public String getId() {
-        return id;
+    public static String getKeyCategoryName() {
+        return KEY_CATEGORY_NAME;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public String getName() {

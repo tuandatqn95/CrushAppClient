@@ -22,7 +22,11 @@ import com.crush.crushappclient.model.Category;
 import com.crush.crushappclient.model.MainDrink;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -30,6 +34,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import pl.droidsonroids.gif.GifTextView;
 
 
@@ -37,81 +43,79 @@ public class TabProductFragment extends Fragment {
 
     private static final String TAG = TabProductFragment.class.getSimpleName();
 
-    private static final String ARG_PARAM = "CATEGORY";
-    private GifTextView gifTextViewLoading;
-    private RecyclerView recyclerViewProduct;
-    private Category category;
-    private List<MainDrink> mainDrinkList = new ArrayList<>();
+    private static final String ARG_PARAM = "CATEGORY_ID";
 
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    @BindView(R.id.recyclerViewProduct)
+    RecyclerView recyclerViewProduct;
+
+    MainDrinkAdapter mAdapter;
+
+    String categoryId;
+    DocumentReference categoryRef;
+
+    FirebaseFirestore mFirestore;
+    Query mQuery;
+
 
     public TabProductFragment() {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        if (getArguments() != null) {
-            category = (Category) getArguments().getSerializable(ARG_PARAM);
-            Log.d(TAG, "Received: "+category.getId()+"-"+category.getName());
-        }
-        View rootView = inflater.inflate(R.layout.fragment_tab_product, container, false);
-        gifTextViewLoading = (GifTextView) rootView.findViewById(R.id.loadingGif);
-        gifTextViewLoading.setVisibility(View.VISIBLE);
 
-        recyclerViewProduct = (RecyclerView) rootView.findViewById(R.id.recyclerViewProduct);
+        if (getArguments() != null) {
+            categoryId =  getArguments().getString(ARG_PARAM);
+
+        }
+
+        // Inflate the layout for this fragment
+        View rootView = inflater.inflate(R.layout.fragment_tab_product, container, false);
+        ButterKnife.bind(this,rootView);
+
+        mFirestore = FirebaseFirestore.getInstance();
+        mQuery = mFirestore.collection("categories").document(categoryId).collection("maindrinks");
+
+
+        mAdapter = new MainDrinkAdapter(mQuery, new MainDrinkAdapter.OnMaindrinkSelectedListener() {
+            @Override
+            public void OnMaindrinkClicked(DocumentSnapshot snapshot) {
+                Intent intent = new Intent(getActivity(),ProductInfoActivity.class);
+                intent.putExtra(ProductInfoActivity.ARG_PARAM_1, categoryId);
+                intent.putExtra(ProductInfoActivity.ARG_PARAM_2,snapshot.getId());
+                startActivity(intent);
+            }
+        });
+
+        recyclerViewProduct.setAdapter(mAdapter);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(),3);
         recyclerViewProduct.setLayoutManager(layoutManager);
         recyclerViewProduct.setItemAnimator(new DefaultItemAnimator());
         recyclerViewProduct.addItemDecoration(new SeparatorDecoration(getActivity(),Color.TRANSPARENT,3f));
 
-        Log.d(TAG, category.getName());
-
-        db.collection("categories").document(category.getId()).collection("maindrinks").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isComplete()) {
-                    mainDrinkList.clear();
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        mainDrinkList.add(document.toObject(MainDrink.class));
-                    }
-                    setupRecyclerView(recyclerViewProduct, mainDrinkList);
-
-                }
-            }
-        });
-
-
         return rootView;
     }
 
-    private void setupRecyclerView(RecyclerView recyclerView, List<MainDrink> categories) {
-        MainDrinkAdapter adapter = new MainDrinkAdapter(getActivity(), mainDrinkList);
-        adapter.setOnItemClickedListener(new MainDrinkAdapter.OnItemClickedListener() {
-            @Override
-            public void onItemClick(MainDrink mainDrink) {
-                if(mainDrink.getName()==null){
-                    return;
-                }
-                Intent intent = new Intent(getActivity(),ProductInfoActivity.class);
-                intent.putExtra("mainDrink",(Serializable) mainDrink);
-                startActivity(intent);
-            }
-        });
-        recyclerView.setAdapter(adapter);
-        gifTextViewLoading.setVisibility(View.GONE);
-
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(mAdapter != null)
+            mAdapter.startListening();
     }
 
-    public static TabProductFragment newInstance(Category category) {
-        Log.d(TAG, "Sent: "+category.getId()+"-"+category.getName());
+    @Override
+    public void onStop() {
+        super.onStop();
+        if(mAdapter != null)
+            mAdapter.stopListening();
+    }
+
+    public static TabProductFragment newInstance(String categoryId) {
+
         TabProductFragment fragment = new TabProductFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_PARAM, category);
-
+        args.putString(ARG_PARAM, categoryId);
         fragment.setArguments(args);
         return fragment;
     }

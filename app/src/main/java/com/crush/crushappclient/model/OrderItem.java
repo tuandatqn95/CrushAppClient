@@ -1,37 +1,36 @@
 package com.crush.crushappclient.model;
 
+import com.google.firebase.firestore.DocumentSnapshot;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrderItem {
 
-    private MainDrink mainDrink;
-    private List<Topping> toppingList;
+    private DocumentSnapshot mainDrink;
+    private List<DocumentSnapshot> toppingList = new ArrayList<>();
     private int quantity;
 
-    public OrderItem(MainDrink mainDrink, List<Topping> toppingList, int quantity) {
+    public OrderItem(DocumentSnapshot mainDrink) {
         this.mainDrink = mainDrink;
-        this.toppingList = toppingList;
-        this.quantity = quantity;
     }
 
     public OrderItem() {
-        toppingList = new ArrayList<>();
     }
 
-    public MainDrink getMainDrink() {
+    public DocumentSnapshot getMainDrink() {
         return mainDrink;
     }
 
-    public void setMainDrink(MainDrink mainDrink) {
+    public void setMainDrink(DocumentSnapshot mainDrink) {
         this.mainDrink = mainDrink;
     }
 
-    public List<Topping> getToppingList() {
+    public List<DocumentSnapshot> getToppingList() {
         return toppingList;
     }
 
-    public void setToppingList(List<Topping> toppingList) {
+    public void setToppingList(List<DocumentSnapshot> toppingList) {
         this.toppingList = toppingList;
     }
 
@@ -44,9 +43,9 @@ public class OrderItem {
     }
 
     public long getPrice() {
-        long price = mainDrink.getPrice();
-        for (Topping topping : toppingList) {
-            price += topping.getPrice();
+        long price = mainDrink.toObject(MainDrink.class).getPrice();
+        for (DocumentSnapshot topping : toppingList) {
+            price += topping.toObject(Topping.class).getPrice();
         }
         return price;
     }

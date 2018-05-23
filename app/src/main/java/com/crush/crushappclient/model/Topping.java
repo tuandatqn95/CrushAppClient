@@ -3,6 +3,7 @@ package com.crush.crushappclient.model;
 import java.io.Serializable;
 
 public class  Topping implements Serializable {
+    public static final String KEY_TOPPING_PRICE = "price";
     private String id;
     private String name;
     private long price;

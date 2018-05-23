@@ -3,6 +3,7 @@ package com.crush.crushappclient.adapter;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,110 +11,97 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.crush.crushappclient.DBHelper.ToppingHelper;
 import com.crush.crushappclient.Interface.OnToppingClickedListener;
 import com.crush.crushappclient.activity.ProductInfoActivity;
 import com.crush.crushappclient.R;
 import com.crush.crushappclient.model.Topping;
-import com.squareup.picasso.Picasso;
+import com.crush.crushappclient.util.StringFormatUtils;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-public class ToppingAdapter extends RecyclerView.Adapter<ToppingAdapter.RecyclerViewHolder> {
-    private Context context;
-    private List<Topping> toppingList;
-    private OnItemClickedListener onItemClickedListener;
-    private List<Integer> selectedPosition = new ArrayList<>();
-    private OnToppingClickedListener mListener;
 
-    public ToppingAdapter(Context context) {
-        this.context = context;
-        this.toppingList = ToppingHelper.getInstance().gets();
+public class ToppingAdapter extends FirestoreAdapter<ToppingAdapter.ViewHolder> {
+
+    public interface OnToppingSelectedListener {
+        void OnToppingSelected(DocumentSnapshot snapshot);
+
+        void OnToppingDeselected(DocumentSnapshot snapshot);
     }
 
+    private List<Integer> selectedPosition;
 
-    @Override
-    public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-        View item = inflater.inflate(R.layout.topping_item_layout, null);
+    private OnToppingSelectedListener mListener;
 
-        return new RecyclerViewHolder(item);
+    public ToppingAdapter(Query query, OnToppingSelectedListener listener) {
+        super(query);
+        this.mListener = listener;
+        this.selectedPosition = new ArrayList<>();
     }
 
+    @NonNull
     @Override
-    public void onBindViewHolder(final RecyclerViewHolder holder, final int position) {
-        Topping topping = toppingList.get(position);
-        Picasso.with(context).load(topping.getImageURL()).placeholder(R.drawable.show_loader).into(holder.imgvTopping);
-        holder.txtvName.setText(topping.getName());
-        holder.txtvPrice.setText(String.valueOf(topping.getPrice()));
-        holder.imgvCheck.setVisibility(selectedPosition.contains(position) ? View.VISIBLE : View.INVISIBLE);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (selectedPosition.contains(position)) {
-                    if (selectedPosition.indexOf(position) >= 0)
-                        selectedPosition.remove(selectedPosition.indexOf(position));
-                    if (mListener != null) {
-                        mListener.OnDeselected(toppingList.get(position));
-                    }
-                } else {
-                    if (selectedPosition.indexOf(position) < 0)
-                    selectedPosition.add(position);
-                    if (mListener != null) {
-                        mListener.OnSelected(toppingList.get(position));
-                    }
-                }
-                notifyItemChanged(position);
-            }
-        });
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        return new ViewHolder(inflater.inflate(R.layout.topping_item_layout, parent, false));
     }
 
     @Override
-    public int getItemCount() {
-        return toppingList.size();
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.bind(getSnapshot(position), position, mListener);
     }
 
-    class RecyclerViewHolder extends RecyclerView.ViewHolder {
-        ImageView imgvCheck;
-        ImageView imgvTopping;
-        TextView txtvName;
-        TextView txtvPrice;
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.imgvtopping)
+        ImageView toppingImage;
 
-        private RecyclerViewHolder(final View itemView) {
+        @BindView(R.id.txtvname)
+        TextView toppingName;
+
+        @BindView(R.id.txtvprice)
+        TextView toppingPrice;
+
+        @BindView(R.id.imgvcheck)
+        ImageView selectedTopping;
+
+        public ViewHolder(View itemView) {
             super(itemView);
-            imgvTopping = (ImageView) itemView.findViewById(R.id.imgvtopping);
-            txtvName = (TextView) itemView.findViewById(R.id.txtvname);
-            txtvPrice = (TextView) itemView.findViewById(R.id.txtvprice);
-            imgvCheck = (ImageView) itemView.findViewById(R.id.imgvcheck);
+            ButterKnife.bind(this, itemView);
+        }
+
+        public void bind(final DocumentSnapshot snapshot, int position, final OnToppingSelectedListener mListener) {
+            Topping topping = snapshot.toObject(Topping.class);
+            Glide.with(toppingImage.getContext()).load(topping.getImageURL()).into(toppingImage);
+            toppingName.setText(topping.getName());
+            toppingPrice.setText(StringFormatUtils.FormatCurrency(topping.getPrice()));
+            selectedTopping.setImageResource(R.drawable.check);
+            boolean isSelected = selectedTopping.getVisibility() == View.VISIBLE;
+            selectedTopping.setVisibility(isSelected ? View.VISIBLE : View.INVISIBLE);
+
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (mListener != null) {
+                        if (selectedTopping.getVisibility() == View.VISIBLE) {
+                            selectedTopping.setVisibility(View.INVISIBLE);
+                            mListener.OnToppingDeselected(snapshot);
+                        } else {
+                            selectedTopping.setVisibility(View.VISIBLE);
+                            mListener.OnToppingSelected(snapshot);
+                        }
+                    }
 
-                }
-            });
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-
-                    return true;
                 }
             });
         }
-    }
-
-    public interface OnItemClickedListener {
-        void onItemClick(Topping topping);
-
-    }
-
-    public void setOnItemClickedListener(ToppingAdapter.OnItemClickedListener onItemClickedListener) {
-        this.onItemClickedListener = onItemClickedListener;
-    }
-
-    public void setOnToppingClickedListener(OnToppingClickedListener mListener) {
-        this.mListener = mListener;
     }
 }

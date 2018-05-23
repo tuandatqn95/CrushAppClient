@@ -1,7 +1,9 @@
 package com.crush.crushappclient.adapter;
 
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -13,24 +15,17 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-/**
- * RecyclerView adapter for displaying the results of a Firestore {@link Query}.
- * <p>
- * Note that this class forgoes some efficiency to gain simplicity. For example, the result of
- * {@link DocumentSnapshot#toObject(Class)} is not cached so the same object may be deserialized
- * many times as the user scrolls.
- */
-public abstract class FirestoreAdapter<VH extends RecyclerView.ViewHolder>     extends RecyclerView.Adapter<VH>
-        implements EventListener<QuerySnapshot> {
+public class FirestoreBaseAdapter extends BaseAdapter   implements EventListener<QuerySnapshot> {
 
-    private static final String TAG = "FirestoreAdapter";
+
+    private static final String TAG = "FirestoreBaseAdapter";
 
     private Query mQuery;
     private ListenerRegistration mRegistration;
 
     private ArrayList<DocumentSnapshot> mSnapshots = new ArrayList<>();
 
-    public FirestoreAdapter(Query query) {
+    public FirestoreBaseAdapter(Query query) {
         mQuery = query;
     }
 
@@ -90,10 +85,6 @@ public abstract class FirestoreAdapter<VH extends RecyclerView.ViewHolder>     e
         startListening();
     }
 
-    @Override
-    public int getItemCount() {
-        return mSnapshots.size();
-    }
 
     protected DocumentSnapshot getSnapshot(int index) {
         return mSnapshots.get(index);
@@ -101,32 +92,59 @@ public abstract class FirestoreAdapter<VH extends RecyclerView.ViewHolder>     e
 
     protected void onDocumentAdded(DocumentChange change) {
         mSnapshots.add(change.getNewIndex(), change.getDocument());
-        notifyItemInserted(change.getNewIndex());
+        notifyDataSetChanged();
+//        notifyItemInserted(change.getNewIndex());
     }
 
     protected void onDocumentModified(DocumentChange change) {
         if (change.getOldIndex() == change.getNewIndex()) {
             // Item changed but remained in same position
             mSnapshots.set(change.getOldIndex(), change.getDocument());
-            notifyItemChanged(change.getOldIndex());
+            notifyDataSetChanged();
+
+//            notifyItemChanged(change.getOldIndex());
         } else {
             // Item changed and changed position
             mSnapshots.remove(change.getOldIndex());
             mSnapshots.add(change.getNewIndex(), change.getDocument());
-            notifyItemMoved(change.getOldIndex(), change.getNewIndex());
+            notifyDataSetChanged();
+
+//            notifyItemMoved(change.getOldIndex(), change.getNewIndex());
         }
     }
 
     protected void onDocumentRemoved(DocumentChange change) {
         mSnapshots.remove(change.getOldIndex());
-        notifyItemRemoved(change.getOldIndex());
+        notifyDataSetChanged();
+
+//        notifyItemRemoved(change.getOldIndex());
     }
 
     protected void onError(FirebaseFirestoreException e) {
     }
 
-    ;
+
 
     protected void onDataChanged() {
+    }
+
+    @Override
+    public int getCount() {
+        return mSnapshots.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return mSnapshots.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        return null;
     }
 }

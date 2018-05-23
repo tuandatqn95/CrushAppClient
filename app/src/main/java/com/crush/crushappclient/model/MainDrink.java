@@ -10,15 +10,16 @@ public class MainDrink implements Serializable {
     private String name;
     private long price;
     private String imageURL;
-    private String categoryId;
 
-    public MainDrink(){}
 
-    public MainDrink(String name, long price, String imageURL, String categoryId) {
+    public MainDrink() {
+    }
+
+    public MainDrink(String name, long price, String imageURL) {
         this.name = name;
         this.price = price;
         this.imageURL = imageURL;
-        this.categoryId = categoryId;
+
     }
 
     public String getName() {
@@ -45,11 +46,5 @@ public class MainDrink implements Serializable {
         this.imageURL = imageURL;
     }
 
-    public String getCategoryId() {
-        return categoryId;
-    }
 
-    public void setCategoryId(String categoryId) {
-        this.categoryId = categoryId;
-    }
 }
