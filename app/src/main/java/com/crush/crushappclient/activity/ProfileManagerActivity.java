@@ -20,11 +20,25 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import butterknife.BindView;
+
 public class ProfileManagerActivity extends AppCompatActivity {
+
+    @BindView(R.id.spinnerSex)
     Spinner spinnerSex;
-    EditText edtName,edtEmail;
+
+    @BindView(R.id.edtname)
+    EditText edtName;
+
+    @BindView(R.id.edtemail)
+    EditText edtEmail;
+
+    @BindView(R.id.txtvdate)
     TextView txtvDate;
+
+    @BindView(R.id.btnupdate)
     Button btnUpdate;
+
     Calendar cal;
     Date dateFinish;
     Date hourFinish;
@@ -35,7 +49,6 @@ public class ProfileManagerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile_manager);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        init();
         addSpinner();
         addEvent();
     }
@@ -58,7 +71,7 @@ public class ProfileManagerActivity extends AppCompatActivity {
 
     private void addSpinner() {
         List<String> list = new ArrayList<>();
-        list.add("Chọn giới tính");
+        list.add("Không xác định");
         list.add("Nam");
         list.add("Nữ");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,list);
@@ -73,7 +86,7 @@ public class ProfileManagerActivity extends AppCompatActivity {
             public void onDateSet(DatePicker view, int year,
                                   int monthOfYear,
                                   int dayOfMonth) {
-                txtvDate.setText((dayOfMonth) +"/"+(monthOfYear+1)+"/"+year);
+                txtvDate.setText((dayOfMonth>9?dayOfMonth:"0"+dayOfMonth) +"/"+(monthOfYear>8?monthOfYear+1:"0"+(monthOfYear+1))+"/"+year);
             }
         };
         String s=txtvDate.getText()+"";
@@ -86,13 +99,5 @@ public class ProfileManagerActivity extends AppCompatActivity {
                 callback, nam, thang, ngay);
         pic.setTitle("Chọn ngày tháng năm sinh");
         pic.show();
-    }
-
-    private void init() {
-        spinnerSex = (Spinner) findViewById(R.id.spinnerSex);
-        edtName = (EditText) findViewById(R.id.edtname);
-        edtEmail = (EditText) findViewById(R.id.edtemail);
-        txtvDate = (TextView) findViewById(R.id.txtvdate);
-        btnUpdate = (Button) findViewById(R.id.btnupdate);
     }
 }

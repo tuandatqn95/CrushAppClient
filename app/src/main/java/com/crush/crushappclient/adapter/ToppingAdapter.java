@@ -31,6 +31,7 @@ import butterknife.ButterKnife;
 public class ToppingAdapter extends FirestoreAdapter<ToppingAdapter.ViewHolder> {
 
     public interface OnToppingSelectedListener {
+
         void OnToppingSelected(DocumentSnapshot snapshot);
 
         void OnToppingDeselected(DocumentSnapshot snapshot);

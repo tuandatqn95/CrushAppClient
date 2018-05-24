@@ -37,29 +37,33 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ProductInfoActivity extends AppCompatActivity implements EventListener<DocumentSnapshot> {
-    public static final int ADD_TOPPING = 1;
-    public static final int REMOVE_TOPPING = 2;
+
     public static final String ARG_PARAM_1 = "CATEGORY_ID";
     public static final String ARG_PARAM_2 = "MAINDRINK_ID";
     private static final String TAG = "ProductInfoActivity";
+
     @BindView(R.id.txtvdrinkName)
     TextView txtvName;
+
     @BindView(R.id.txtvdrinkPrice)
     TextView txtvPrice;
+
     @BindView(R.id.imageViewDrink)
     ImageView imgvDrink;
+
     @BindView(R.id.imgvback)
     ImageView imgvBack;
+
     @BindView(R.id.btnOrder)
     Button btnOrder;
+
     @BindView(R.id.numberPickerQuantity)
     NumberPicker npQuantity;
 
     @BindView(R.id.recyclerViewTopping)
     RecyclerView recyclerView;
-    private OrderItem orderItem;
-    private ToppingAdapter adapter;
 
+    private ToppingAdapter adapter;
     private FirebaseFirestore mFirestore;
     private Query mQuery;
     private DocumentReference drinkRef;
@@ -85,9 +89,6 @@ public class ProductInfoActivity extends AppCompatActivity implements EventListe
         mFirestore = FirebaseFirestore.getInstance();
         mQuery = mFirestore.collection("toppings");
         drinkRef = mFirestore.collection("categories").document(categoryId).collection("maindrinks").document(drinkId);
-
-
-
 
         adapter = new ToppingAdapter(mQuery, new ToppingAdapter.OnToppingSelectedListener() {
             @Override
