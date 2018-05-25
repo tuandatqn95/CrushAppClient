@@ -66,6 +66,7 @@ public class ProductInfoActivity extends AppCompatActivity implements EventListe
     private ToppingAdapter adapter;
     private FirebaseFirestore mFirestore;
     private Query mQuery;
+
     private DocumentReference drinkRef;
     ListenerRegistration mDrinkRegistration;
     private String categoryId;
