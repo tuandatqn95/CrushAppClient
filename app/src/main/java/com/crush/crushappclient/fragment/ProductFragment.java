@@ -6,31 +6,22 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.crush.crushappclient.DBHelper.CategoryDBHelper;
 import com.crush.crushappclient.R;
 import com.crush.crushappclient.activity.CartActivity;
 import com.crush.crushappclient.activity.ProductInfoActivity;
 import com.crush.crushappclient.adapter.TabViewPaperAdapter;
-import com.crush.crushappclient.model.Category;
-import com.crush.crushappclient.model.MainDrink;
 import com.crush.crushappclient.model.OrderItem;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -38,7 +29,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import pl.droidsonroids.gif.GifTextView;
 
 
 public class ProductFragment extends Fragment {
@@ -79,7 +69,7 @@ public class ProductFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_product, container, false);
-        ButterKnife.bind(this,rootView);
+        ButterKnife.bind(this, rootView);
 
         mFirestore = FirebaseFirestore.getInstance();
         mQuery = mFirestore.collection("categories");
@@ -96,16 +86,15 @@ public class ProductFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        if(mAdapter!=null)
+        if (mAdapter != null)
             mAdapter.startListening();
     }
-
 
 
     @Override
     public void onStop() {
         super.onStop();
-        if(mAdapter!=null)
+        if (mAdapter != null)
             mAdapter.stopListening();
     }
 
@@ -122,13 +111,12 @@ public class ProductFragment extends Fragment {
         cart_quantity.setBackground(cartBackground);
 
 
-
         cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), CartActivity.class);
                 intent.putExtra(LIST_ORDER_ITEM, (Serializable) orderItemList);
-                startActivityForResult(intent,REQUEST_CODE_ORDER_COMPLETE);
+                startActivityForResult(intent, REQUEST_CODE_ORDER_COMPLETE);
             }
         });
     }
@@ -137,20 +125,19 @@ public class ProductFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == REQUEST_CODE){
-            if(resultCode == Activity.RESULT_OK){
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
                 OrderItem orderItem = (OrderItem) data.getSerializableExtra(ProductInfoActivity.KEY_ORDER_ITEM);
-                Log.d(TAG, "onActivityResult: "+orderItem.getMainDrink()+" - "+orderItem.getQuantity());
                 orderItemList.add(orderItem);
-                quanlity+=orderItem.getQuantity();
-                cart_quantity.setText(quanlity+"");
+                quanlity += orderItem.getQuantity();
+                cart_quantity.setText(quanlity + "");
             }
-            if(resultCode == Activity.RESULT_CANCELED){
+            if (resultCode == Activity.RESULT_CANCELED) {
 
             }
         }
-        if(requestCode == REQUEST_CODE_ORDER_COMPLETE){
-
+        if (requestCode == CartActivity.REQUEST_CODE_ORDER_COMPLETE) {
+            // TODO: 6/3/2018 Delete order when complete
         }
     }
 }

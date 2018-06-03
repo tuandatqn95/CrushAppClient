@@ -28,7 +28,8 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
         this.orderItemList = orderItemList;
     }
 
-    public OrderItemAdapter(){}
+    public OrderItemAdapter() {
+    }
 
     @NonNull
     @Override
@@ -62,24 +63,24 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
 
         public ViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
 
         }
 
         public void bind(OrderItem orderItem) {
 
-            drinkName.setText(orderItem.getMainDrink());
-            drinkQuantity.setText(orderItem.getQuantity()+"");
-            drinkPrice.setText(StringFormatUtils.FormatCurrency(orderItem.getPrice()));
+            drinkName.setText(orderItem.getMaindrink().getName());
+            drinkQuantity.setText(orderItem.getQuantity() + "");
+            drinkPrice.setText(StringFormatUtils.FormatCurrency(orderItem.getPrice() * orderItem.getQuantity()));
 
             GradientDrawable background = new GradientDrawable();
             background.setShape(GradientDrawable.RECTANGLE);
             background.setCornerRadius(25);
-            background.setStroke(1,Color.BLACK);
+            background.setStroke(1, Color.BLACK);
 
             drinkQuantity.setBackground(background);
 
-            OrderToppingAdapter adapter = new OrderToppingAdapter(orderItem.getToppingList(),orderItem.getQuantity());
+            OrderToppingAdapter adapter = new OrderToppingAdapter(orderItem.getToppings(), orderItem.getQuantity());
             recyclerViewTopping.setAdapter(adapter);
             recyclerViewTopping.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
             recyclerViewTopping.setItemAnimator(new DefaultItemAnimator());

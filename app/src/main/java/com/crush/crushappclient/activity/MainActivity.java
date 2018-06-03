@@ -1,30 +1,38 @@
 package com.crush.crushappclient.activity;
 
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.WindowManager;
 
-import com.crush.crushappclient.DBHelper.CategoryDBHelper;
-import com.crush.crushappclient.DBHelper.MainDrinkDBHelper;
-import com.crush.crushappclient.DBHelper.NotificationDBHelper;
-import com.crush.crushappclient.DBHelper.ToppingHelper;
 import com.crush.crushappclient.R;
 import com.crush.crushappclient.adapter.BottomNavigationPageAdapter;
 import com.crush.crushappclient.fragment.NotificationFragment;
 import com.crush.crushappclient.fragment.ProductFragment;
 import com.crush.crushappclient.fragment.ProfileFragment;
+import com.crush.crushappclient.viewmodel.MainActivityViewModel;
+import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.ErrorCodes;
+import com.firebase.ui.auth.IdpResponse;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private static final int REQUEST_CODE = 9;
+    private static final int RC_SIGN_IN = 9001;
     private ViewPager viewPaper;
-
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -46,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     };
+    private MainActivityViewModel mViewModel;
 
 
     @Override
@@ -54,9 +63,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        viewPaper = (ViewPager) findViewById(R.id.navigationViewPaper);
 
+        viewPaper = (ViewPager) findViewById(R.id.navigationViewPaper);
         setupViewPaper(viewPaper);
+
+        mViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
+
+        FirebaseFirestore.setLoggingEnabled(true);
+
         final BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
 
         viewPaper.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -92,10 +106,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        CategoryDBHelper.getInstance().update();
-        ToppingHelper.getInstance().update();
-        MainDrinkDBHelper.getInstance().update();
-        NotificationDBHelper.getInstance().update();
+        // Start sign in if necessary
+//        if (shouldStartSignIn()) {
+//            startSignIn();
+//            return;
+//        }
     }
 
     private void setupViewPaper(ViewPager viewPaper) {
@@ -106,10 +121,64 @@ public class MainActivity extends AppCompatActivity {
         viewPaper.setAdapter(adapter);
     }
 
+    private boolean shouldStartSignIn() {
+        return (!mViewModel.getIsSigningIn() && FirebaseAuth.getInstance().getCurrentUser() == null);
+    }
+
+    private void startSignIn() {
+
+        // Sign in with FirebaseUI
+        Intent intent = AuthUI.getInstance().createSignInIntentBuilder()
+                .setAvailableProviders(Collections.singletonList(
+                        new AuthUI.IdpConfig.PhoneBuilder().setDefaultCountryIso("VN").build()))
+
+                .build();
+
+        startActivityForResult(intent, RC_SIGN_IN);
+        mViewModel.setIsSigningIn(false);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        for(Fragment fragment:getSupportFragmentManager().getFragments()){
-            fragment.onActivityResult(requestCode,resultCode,data);
+        if (requestCode == RC_SIGN_IN) {
+            IdpResponse response = IdpResponse.fromResultIntent(data);
+            if (resultCode == RESULT_OK) {
+                mViewModel.setIsSigningIn(true);
+            } else {
+                if (response == null) {
+                    // User pressed the back button.
+                    finish();
+                } else if (response.getError() != null
+                        && response.getError().getErrorCode() == ErrorCodes.NO_NETWORK) {
+                    showSignInErrorDialog(R.string.message_no_network);
+                } else {
+                    showSignInErrorDialog(R.string.message_unknown);
+                }
+            }
         }
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    private void showSignInErrorDialog(@StringRes int message) {
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle(R.string.title_sign_in_error)
+                .setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton(R.string.option_retry, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        startSignIn();
+                    }
+                })
+                .setNegativeButton(R.string.option_exit, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                }).create();
+
+        dialog.show();
     }
 }

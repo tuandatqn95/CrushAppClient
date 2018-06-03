@@ -1,42 +1,41 @@
 package com.crush.crushappclient.model;
 
-import com.google.firebase.firestore.DocumentSnapshot;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrderItem implements Serializable {
 
-    private String mainDrink;
-    private List<Topping> toppingList = new ArrayList<>();
+    private MainDrink maindrink;
+    private List<Topping> toppings = new ArrayList<>();
     private long quantity;
     private long price;
 
-    public OrderItem(String mainDrink, List<Topping> toppingList, long quantity, long price) {
-        this.mainDrink = mainDrink;
-        this.toppingList = toppingList;
-        this.quantity = quantity;
-        this.price = price;
-    }
 
     public OrderItem() {
     }
 
-    public String getMainDrink() {
-        return mainDrink;
+    public OrderItem(MainDrink maindrink, List<Topping> toppings, long quantity, long price) {
+        this.maindrink = maindrink;
+        this.toppings = toppings;
+        this.quantity = quantity;
+        this.price = price;
     }
 
-    public void setMainDrink(String mainDrink) {
-        this.mainDrink = mainDrink;
+    public MainDrink getMaindrink() {
+        return maindrink;
     }
 
-    public List<Topping> getToppingList() {
-        return toppingList;
+    public void setMaindrink(MainDrink maindrink) {
+        this.maindrink = maindrink;
     }
 
-    public void setToppingList(List<Topping> toppingList) {
-        this.toppingList = toppingList;
+    public List<Topping> getToppings() {
+        return toppings;
+    }
+
+    public void setToppings(List<Topping> toppings) {
+        this.toppings = toppings;
     }
 
     public long getQuantity() {

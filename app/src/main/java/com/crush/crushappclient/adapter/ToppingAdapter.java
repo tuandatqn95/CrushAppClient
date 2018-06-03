@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.crush.crushappclient.DBHelper.ToppingHelper;
 import com.crush.crushappclient.Interface.OnToppingClickedListener;
 import com.crush.crushappclient.activity.ProductInfoActivity;
 import com.crush.crushappclient.R;

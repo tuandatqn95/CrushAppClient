@@ -2,19 +2,17 @@ package com.crush.crushappclient.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.crush.crushappclient.R;
 import com.crush.crushappclient.adapter.ToppingAdapter;
@@ -101,13 +99,13 @@ public class ProductInfoActivity extends AppCompatActivity implements EventListe
             @Override
             public void OnToppingSelected(DocumentSnapshot snapshot) {
                 toppingList.add(snapshot);
-                setdrinkPrice();
+                updateDrinkPrice();
             }
 
             @Override
             public void OnToppingDeselected(DocumentSnapshot snapshot) {
                 toppingList.remove(snapshot);
-                setdrinkPrice();
+                updateDrinkPrice();
             }
         });
 
@@ -159,7 +157,7 @@ public class ProductInfoActivity extends AppCompatActivity implements EventListe
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                setResult(Activity.RESULT_CANCELED,intent);
+                setResult(Activity.RESULT_CANCELED, intent);
                 finish();
             }
         });
@@ -169,13 +167,14 @@ public class ProductInfoActivity extends AppCompatActivity implements EventListe
                 Intent intentResult = new Intent();
 
                 List<Topping> listTopping = new ArrayList<>();
-                for (DocumentSnapshot topping:toppingList){
+                for (DocumentSnapshot topping : toppingList) {
                     listTopping.add(topping.toObject(Topping.class));
                 }
 
-                OrderItem orderItem = new OrderItem(drinkId,listTopping,npQuantity.getValue(),price);
+
+                OrderItem orderItem = new OrderItem(drink, listTopping, npQuantity.getValue(), price);
                 intentResult.putExtra(KEY_ORDER_ITEM, (Serializable) orderItem);
-                setResult(Activity.RESULT_OK,intentResult);
+                setResult(Activity.RESULT_OK, intentResult);
                 finish();
             }
         });
@@ -184,19 +183,29 @@ public class ProductInfoActivity extends AppCompatActivity implements EventListe
 
     @Override
     public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
-        drink = snapshot.toObject(MainDrink.class);
-        Log.d(TAG,"onEvent: "+drink);
-        setdrinkPrice();
+        MainDrink mainDrink = snapshot.toObject(MainDrink.class);
+
+        OnMainDrinkLoaded(mainDrink);
+    }
+
+    private void OnMainDrinkLoaded(MainDrink drink) {
+        this.drink = drink;
+        this.price = getDrinkPrice();
+        txtvPrice.setText(StringFormatUtils.FormatCurrency(price));
         txtvName.setText(drink.getName());
     }
 
-    private void setdrinkPrice() {
 
-        price = drink.getPrice();
-        for(DocumentSnapshot snapshot : toppingList){
-            price+=snapshot.getLong(Topping.KEY_TOPPING_PRICE);
+    private long getDrinkPrice() {
+        long price = drink.getPrice();
+        for (DocumentSnapshot snapshot : toppingList) {
+            price += snapshot.getLong(Topping.KEY_TOPPING_PRICE);
         }
+        return price;
+    }
 
+    private void updateDrinkPrice() {
+        this.price = getDrinkPrice();
         txtvPrice.setText(StringFormatUtils.FormatCurrency(price));
     }
 }
