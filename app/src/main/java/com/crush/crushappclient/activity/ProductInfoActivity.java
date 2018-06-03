@@ -1,5 +1,6 @@
 package com.crush.crushappclient.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,7 +30,9 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Nullable;
 
@@ -40,7 +43,9 @@ public class ProductInfoActivity extends AppCompatActivity implements EventListe
 
     public static final String ARG_PARAM_1 = "CATEGORY_ID";
     public static final String ARG_PARAM_2 = "MAINDRINK_ID";
-    private static final String TAG = "ProductInfoActivity";
+    public static final String TAG = "ProductInfoActivity";
+    public static final String LIST_TOPPING = "LIST_TOPPING";
+    public static final String KEY_ORDER_ITEM = "ORDER_ITEM";
 
     @BindView(R.id.txtvdrinkName)
     TextView txtvName;
@@ -63,6 +68,7 @@ public class ProductInfoActivity extends AppCompatActivity implements EventListe
     @BindView(R.id.recyclerViewTopping)
     RecyclerView recyclerView;
 
+    private long price;
     private ToppingAdapter adapter;
     private FirebaseFirestore mFirestore;
     private Query mQuery;
@@ -82,7 +88,7 @@ public class ProductInfoActivity extends AppCompatActivity implements EventListe
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         ButterKnife.bind(this);
-
+        // get drink from Tab Product Fragment
         Intent intent = getIntent();
         categoryId = intent.getStringExtra(ARG_PARAM_1);
         drinkId = intent.getStringExtra(ARG_PARAM_2);
@@ -114,16 +120,14 @@ public class ProductInfoActivity extends AppCompatActivity implements EventListe
     }
 
     private void init() {
-
         npQuantity.setMinValue(1);
         npQuantity.setMaxValue(50);
-
 
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
+        addEvent();
 
     }
 
@@ -150,18 +154,31 @@ public class ProductInfoActivity extends AppCompatActivity implements EventListe
     }
 
 
-    private void setdrinkPrice() {
-
-        long price = drink.getPrice();
-        for(DocumentSnapshot snapshot : toppingList){
-            price+=snapshot.getLong(Topping.KEY_TOPPING_PRICE);
-        }
-
-        txtvPrice.setText(StringFormatUtils.FormatCurrency(price));
-    }
-
     private void addEvent() {
+        imgvBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                setResult(Activity.RESULT_CANCELED,intent);
+                finish();
+            }
+        });
+        btnOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentResult = new Intent();
 
+                List<Topping> listTopping = new ArrayList<>();
+                for (DocumentSnapshot topping:toppingList){
+                    listTopping.add(topping.toObject(Topping.class));
+                }
+
+                OrderItem orderItem = new OrderItem(drinkId,listTopping,npQuantity.getValue(),price);
+                intentResult.putExtra(KEY_ORDER_ITEM, (Serializable) orderItem);
+                setResult(Activity.RESULT_OK,intentResult);
+                finish();
+            }
+        });
 
     }
 
@@ -171,5 +188,15 @@ public class ProductInfoActivity extends AppCompatActivity implements EventListe
         Log.d(TAG,"onEvent: "+drink);
         setdrinkPrice();
         txtvName.setText(drink.getName());
+    }
+
+    private void setdrinkPrice() {
+
+        price = drink.getPrice();
+        for(DocumentSnapshot snapshot : toppingList){
+            price+=snapshot.getLong(Topping.KEY_TOPPING_PRICE);
+        }
+
+        txtvPrice.setText(StringFormatUtils.FormatCurrency(price));
     }
 }

@@ -1,9 +1,11 @@
 package com.crush.crushappclient.fragment;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -13,6 +15,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.crush.crushappclient.activity.ProductInfoActivity;
 import com.crush.crushappclient.R;
@@ -20,6 +24,8 @@ import com.crush.crushappclient.ClassSupport.SeparatorDecoration;
 import com.crush.crushappclient.adapter.MainDrinkAdapter;
 import com.crush.crushappclient.model.Category;
 import com.crush.crushappclient.model.MainDrink;
+import com.crush.crushappclient.model.OrderItem;
+import com.crush.crushappclient.model.Topping;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentChange;
@@ -44,6 +50,7 @@ public class TabProductFragment extends Fragment {
     private static final String TAG = TabProductFragment.class.getSimpleName();
 
     private static final String ARG_PARAM = "CATEGORY_ID";
+    private static final int REQUEST_CODE = 9;
 
     @BindView(R.id.recyclerViewProduct)
     RecyclerView recyclerViewProduct;
@@ -82,9 +89,10 @@ public class TabProductFragment extends Fragment {
             @Override
             public void OnMaindrinkClicked(DocumentSnapshot snapshot) {
                 Intent intent = new Intent(getActivity(),ProductInfoActivity.class);
+                Log.d(TAG, "OnMaindrinkClicked: "+getActivity());
                 intent.putExtra(ProductInfoActivity.ARG_PARAM_1, categoryId);
                 intent.putExtra(ProductInfoActivity.ARG_PARAM_2,snapshot.getId());
-                startActivity(intent);
+                getActivity().startActivityForResult(intent,REQUEST_CODE);
             }
         });
 
@@ -94,8 +102,11 @@ public class TabProductFragment extends Fragment {
         recyclerViewProduct.setItemAnimator(new DefaultItemAnimator());
         recyclerViewProduct.addItemDecoration(new SeparatorDecoration(getActivity(),Color.TRANSPARENT,3f));
 
+
         return rootView;
     }
+
+
 
     @Override
     public void onStart() {
@@ -103,6 +114,8 @@ public class TabProductFragment extends Fragment {
         if(mAdapter != null)
             mAdapter.startListening();
     }
+
+
 
     @Override
     public void onStop() {

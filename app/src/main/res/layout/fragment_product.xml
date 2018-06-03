@@ -20,21 +20,61 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#383838">
-            <ImageView
-                android:src="@drawable/crush_logo_yellow"
-                android:layout_width="40dp"
-                android:layout_height="40dp" />
-            <TextView
-                android:text="Crush Milk Tea"
-                android:layout_marginLeft="30dp"
-                android:textColor="@color/colorMainYellow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <ImageView
-                android:src="@drawable/icons8_buying_50px"
-                android:layout_marginLeft="180dp"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:src="@drawable/crush_logo_yellow"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                   />
+                <TextView android:layout_weight="1"
+                    android:text="Crush Milk Tea"
+                    android:layout_margin="10dp"
+                    android:textColor="@color/colorMainYellow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <RelativeLayout
+                    android:layout_gravity="right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/shopping_cart"
+                        android:src="@drawable/icons8_shopping_cart_50px_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp" />
+
+                    <TextView
+                        android:id="@+id/cart_quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="3dp"
+                        android:paddingHorizontal="5dp"
+                        android:minWidth="20dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_alignRight="@+id/shopping_cart"
+                        android:gravity="center"
+                        android:textColor="#fff"
+                        android:textColorHint="#fff"
+                        android:layout_alignParentTop="true"
+                        android:background="#f60000"
+                        android:textSize="12dp"
+                        android:text="0"
+                        tools:hint="0" />
+                </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
         </android.support.v7.widget.Toolbar>
 
         <android.support.design.widget.TabLayout

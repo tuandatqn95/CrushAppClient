@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class ProfileManagerActivity extends AppCompatActivity {
 
@@ -49,7 +50,7 @@ public class ProfileManagerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile_manager);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        addSpinner();
+        ButterKnife.bind(this);
         addEvent();
     }
 
@@ -67,17 +68,6 @@ public class ProfileManagerActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    private void addSpinner() {
-        List<String> list = new ArrayList<>();
-        list.add("Không xác định");
-        list.add("Nam");
-        list.add("Nữ");
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,list);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerSex.setAdapter(adapter);
-
     }
 
     public void showDatePickerDialog() {

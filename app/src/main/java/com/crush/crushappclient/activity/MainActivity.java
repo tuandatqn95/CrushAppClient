@@ -4,11 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.WindowManager;
-import android.widget.TextView;
 
 import com.crush.crushappclient.DBHelper.CategoryDBHelper;
 import com.crush.crushappclient.DBHelper.MainDrinkDBHelper;
@@ -21,8 +21,11 @@ import com.crush.crushappclient.fragment.ProductFragment;
 import com.crush.crushappclient.fragment.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity {
-
+    private static final String TAG = "MainActivity";
+    private static final int REQUEST_CODE = 9;
     private ViewPager viewPaper;
+
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -43,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,5 +106,10 @@ public class MainActivity extends AppCompatActivity {
         viewPaper.setAdapter(adapter);
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        for(Fragment fragment:getSupportFragmentManager().getFragments()){
+            fragment.onActivityResult(requestCode,resultCode,data);
+        }
+    }
 }

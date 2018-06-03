@@ -53,7 +53,8 @@ public class TabViewPaperAdapter extends FragmentPagerAdapter implements EventLi
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return mSnapshots.get(position).get(Category.KEY_CATEGORY_NAME).toString();
+        Log.d(TAG, "getPageTitle: "+mSnapshots.get(position));
+        return mSnapshots.get(position).getString(Category.KEY_CATEGORY_NAME);
     }
 
     @Override
