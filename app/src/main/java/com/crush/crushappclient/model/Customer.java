@@ -1,33 +1,30 @@
 package com.crush.crushappclient.model;
 
+import java.util.Date;
+
 public class Customer {
-    private int id;
+
     private String name;
     private String address;
     private String email;
     private String phone;
-    private String sex;
-    private String password;
+    private String gender;
+    private String imageURL;
+    private Date birth;
 
-    public Customer (){}
+    public Customer() {
+    }
 
-    public Customer(int id, String name, String address, String email, String phone, String sex, String password) {
-        this.id = id;
+    public Customer(String name, String address, String email, String phone, String gender, String imageURL, Date birth) {
         this.name = name;
         this.address = address;
         this.email = email;
         this.phone = phone;
-        this.sex = sex;
-        this.password = password;
+        this.gender = gender;
+        this.imageURL = imageURL;
+        this.birth = birth;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -61,19 +58,27 @@ public class Customer {
         this.phone = phone;
     }
 
-    public String getSex() {
-        return sex;
+    public String getGender() {
+        return gender;
     }
 
-    public void setSex(String sex) {
-        this.sex = sex;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
-    public String getPassword() {
-        return password;
+    public String getImageURL() {
+        return imageURL;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    public Date getBirth() {
+        return birth;
+    }
+
+    public void setBirth(Date birth) {
+        this.birth = birth;
     }
 }

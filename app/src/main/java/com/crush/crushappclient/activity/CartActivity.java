@@ -23,9 +23,11 @@ import com.crush.crushappclient.fragment.ProductFragment;
 import com.crush.crushappclient.model.Order;
 import com.crush.crushappclient.model.OrderItem;
 import com.crush.crushappclient.util.StringFormatUtils;
+import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -80,11 +82,10 @@ public class CartActivity extends AppCompatActivity {
         Order order = new Order();
         // TODO: 6/3/2018 - Add more information into order
         //order.setAddress("");
-        //order.setUserId("");
+        order.setUserId(FirebaseAuth.getInstance().getUid());
         //order.setNote("");
         order.setStatus("Đã đặt hàng");
         order.setTotalPrice(totalPrice);
-
 
         onCheckout(order, orderItemList);
     }
