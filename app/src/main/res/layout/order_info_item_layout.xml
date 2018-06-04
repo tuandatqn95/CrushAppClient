@@ -6,12 +6,12 @@
     android:orientation="vertical">
 
     <EditText
-        android:id="@+id/order_address"
+        android:id="@+id/order_address1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:hint="address"/>
     <EditText
-        android:id="@+id/order_note"
+        android:id="@+id/order_note1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:hint="note"/>

@@ -136,7 +136,6 @@ public class ProductFragment extends Fragment {
             }
         }
         if (requestCode == REQUEST_CODE_ORDER_COMPLETE) {
-            // TODO: 6/3/2018 Delete order when complete
             if(resultCode == Activity.RESULT_OK) {
                 orderItemList.clear();
                 setCartQuantity(0);

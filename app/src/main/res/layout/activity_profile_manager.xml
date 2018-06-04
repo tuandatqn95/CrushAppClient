@@ -66,7 +66,10 @@
             <EditText
                 android:id="@+id/edtname"
                 android:hint="Họ và tên"
-                android:layout_marginLeft="15dp"
+                android:textColor="@color/colorLightGray"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginVertical="5dp"
+                android:background="@null"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -84,7 +87,10 @@
             <EditText
                 android:id="@+id/edtaddress"
                 android:hint="Địa chỉ"
-                android:layout_marginLeft="15dp"
+                android:textColor="@color/colorLightGray"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginVertical="5dp"
+                android:background="@null"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -124,7 +130,8 @@
                 android:id="@+id/spinnerSex"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginHorizontal="0dp"
+                android:layout_marginVertical="10dp"
                 android:entries="@array/spinnerItems">
 
             </Spinner>
@@ -164,6 +171,8 @@
             <EditText
                 android:id="@+id/edtemail"
                 android:hint="Email"
+                android:textColor="@color/colorLightGray"
+                android:background="@null"
                 android:layout_marginLeft="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

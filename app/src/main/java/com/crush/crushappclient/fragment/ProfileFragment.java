@@ -40,15 +40,12 @@ import javax.annotation.Nullable;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProfileFragment extends Fragment implements EventListener<DocumentSnapshot> {
+public class ProfileFragment extends Fragment{
     private static final String TAG = "ProfileFragment";
 
     ListView lvMenu;
     RecyclerView recyclerViewMenuProfile;
-    private FirebaseFirestore mFirestore;
-    DocumentReference mUserRef;
-    ListenerRegistration mUserRegistration;
-    private DocumentSnapshot mSnapshot;
+
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -61,17 +58,13 @@ public class ProfileFragment extends Fragment implements EventListener<DocumentS
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
         lvMenu = (ListView) rootView.findViewById(R.id.lvMenuProfile);
 
-        mFirestore = FirebaseFirestore.getInstance();
-        mUserRef = mFirestore.collection("customers").document(FirebaseAuth.getInstance().getUid());
-
-
         List<MenuProfile> menuProfileList = new ArrayList<>();
         menuProfileList.add(new MenuProfile(R.drawable.icons8_user_50px, "Quản lý tài khoảng"));
         menuProfileList.add(new MenuProfile(R.drawable.icons8_order_history_50px, "Lịch sử đơn hàng"));
         menuProfileList.add(new MenuProfile(R.drawable.icons8_info_50px, "Giới thiệu"));
         menuProfileList.add(new MenuProfile(R.drawable.icons8_settings_50px, "Cài đặt cấu hình"));
         menuProfileList.add(new MenuProfile(R.drawable.icons8_whatsapp_50px, "Hỗ trợ"));
-        menuProfileList.add(new MenuProfile(R.drawable.icons8_whatsapp_50px, "Đăng xuất"));
+        menuProfileList.add(new MenuProfile(R.drawable.icons8_exit_50px_1, "Đăng xuất"));
         MenuProfileAdapter adapter = new MenuProfileAdapter(getActivity(), menuProfileList);
         lvMenu.setAdapter(adapter);
         lvMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -111,37 +104,29 @@ public class ProfileFragment extends Fragment implements EventListener<DocumentS
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
-        mUserRegistration = mUserRef.addSnapshotListener(this);
+
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (mUserRegistration != null) {
-            mUserRegistration.remove();
-            mUserRegistration = null;
-        }
+
     }
 
     private void updateCustomer() {
         Intent intent = new Intent(getActivity(), ProfileManagerActivity.class);
-        intent.putExtra(ProfileManagerActivity.USER_INFO, (Serializable) mSnapshot.toObject(Customer.class));
         startActivity(intent);
     }
 
-    @Override
-    public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
-        this.mSnapshot = snapshot;
-        onUserLoaded(snapshot.toObject(Customer.class));
-    }
 
-    private void onUserLoaded(Customer customer) {
-
-        Log.d(TAG, "onUserLoaded: Customer" + customer);
-        // TODO: 6/4/2018 --  Loaded User, get info into view
-    }
 
 
 }
