@@ -50,9 +50,11 @@ public class ProfileFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 switch (i){
                     case 0:
-                        sendCustomer();
+                        updateCustomer();
                         break;
-                    case 1:
+                    case 5:
+                        logout();
+                        break;
 
                 }
             }
@@ -60,7 +62,12 @@ public class ProfileFragment extends Fragment {
 
         return rootView;
     }
-    private void sendCustomer(){
+
+    private void logout() {
+
+    }
+
+    private void updateCustomer(){
         Intent intent = new Intent(getActivity(), ProfileManagerActivity.class);
         startActivity(intent);
     }
