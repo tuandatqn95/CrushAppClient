@@ -82,10 +82,6 @@ public class CartActivity extends AppCompatActivity {
     public void OnBtnCartCLicked(View view) {
         Order order = new Order();
         // TODO: 6/3/2018 - Add more information into order
-        dialog = new Dialog(CartActivity.this);
-        dialog.setContentView(R.layout.order_info_item_layout);
-        dialog.setTitle("Order infomation");
-        dialog.show();
 
         order.setAddress("");
         //order.setUserId("");
