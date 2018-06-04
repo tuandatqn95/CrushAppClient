@@ -31,6 +31,7 @@ import butterknife.OnClick;
 
 public class ProfileManagerActivity extends AppCompatActivity {
 
+    public static final String USER_INFO = "user_info";
     @BindView(R.id.spinnerSex)
     Spinner spinnerSex;
 
@@ -55,6 +56,8 @@ public class ProfileManagerActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         mFirestore = FirebaseFirestore.getInstance();
+
+        // TODO: 6/4/2018 Check if intent != null then fill info to form 
 
     }
 
