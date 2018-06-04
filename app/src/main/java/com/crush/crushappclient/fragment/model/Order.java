@@ -1,4 +1,4 @@
-package com.crush.crushappclient.model;
+package com.crush.crushappclient.fragment.model;
 
 import com.google.firebase.firestore.ServerTimestamp;
 

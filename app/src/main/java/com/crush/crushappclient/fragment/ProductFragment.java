@@ -9,17 +9,19 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.crush.crushappclient.R;
 import com.crush.crushappclient.activity.CartActivity;
 import com.crush.crushappclient.activity.ProductInfoActivity;
 import com.crush.crushappclient.adapter.TabViewPaperAdapter;
-import com.crush.crushappclient.model.OrderItem;
+import com.crush.crushappclient.fragment.model.OrderItem;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -29,12 +31,14 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class ProductFragment extends Fragment {
 
 
     public static final String LIST_ORDER_ITEM = "LIST_ORDER_ITEM";
+    public static final int REQUEST_CODE_ORDER_COMPLETE = 11;
     private final String TAG = ProductFragment.class.getSimpleName();
 
     @BindView(R.id.tabLayout)
@@ -55,10 +59,8 @@ public class ProductFragment extends Fragment {
     private Query mQuery;
 
     TabViewPaperAdapter mAdapter;
-    private int REQUEST_CODE = 9;
-    private long quanlity = 0;
+    private long quantity = 0;
     private List<OrderItem> orderItemList = new ArrayList<>();
-    private int REQUEST_CODE_ORDER_COMPLETE = 10;
 
     public ProductFragment() {
         // Required empty public constructor
@@ -109,35 +111,43 @@ public class ProductFragment extends Fragment {
         cartBackground.setCornerRadius(25);
         cartBackground.setColor(Color.RED);
         cart_quantity.setBackground(cartBackground);
-
-
-        cart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CartActivity.class);
-                intent.putExtra(LIST_ORDER_ITEM, (Serializable) orderItemList);
-                startActivityForResult(intent, REQUEST_CODE_ORDER_COMPLETE);
-            }
-        });
+        setCartQuantity(quantity);
     }
 
+    @OnClick(R.id.shopping_cart)
+    public void OnCartClicked(View view){
+        Intent intent = new Intent(getActivity(), CartActivity.class);
+        intent.putExtra(LIST_ORDER_ITEM, (Serializable) orderItemList);
+        getActivity().startActivityForResult(intent, REQUEST_CODE_ORDER_COMPLETE);
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == REQUEST_CODE) {
+        if (requestCode == TabProductFragment.REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 OrderItem orderItem = (OrderItem) data.getSerializableExtra(ProductInfoActivity.KEY_ORDER_ITEM);
                 orderItemList.add(orderItem);
-                quanlity += orderItem.getQuantity();
-                cart_quantity.setText(quanlity + "");
+                setCartQuantity(quantity+orderItem.getQuantity());
+                Log.d(TAG, "onActivityResult:" + orderItemList.size());
             }
             if (resultCode == Activity.RESULT_CANCELED) {
 
             }
         }
-        if (requestCode == CartActivity.REQUEST_CODE_ORDER_COMPLETE) {
+        if (requestCode == REQUEST_CODE_ORDER_COMPLETE) {
             // TODO: 6/3/2018 Delete order when complete
+            if(resultCode == Activity.RESULT_OK) {
+                orderItemList.clear();
+                setCartQuantity(0);
+                Toast.makeText(getActivity(), "Order successfully!", Toast.LENGTH_SHORT).show();
+            }
         }
+
+    }
+
+    private void setCartQuantity(long quan){
+        quantity = quan;
+        cart_quantity.setText(quantity + "");
     }
 }

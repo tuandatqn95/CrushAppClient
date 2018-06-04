@@ -16,6 +16,7 @@
             <TextView
                 android:id="@+id/orderitem_drink_quanlity"
                 android:text="1"
+                android:gravity="center"
                 android:layout_marginHorizontal="5dp"
                 android:paddingHorizontal="5dp"
                 android:minWidth="20dp"

@@ -1,17 +1,21 @@
-package com.crush.crushappclient.model;
+package com.crush.crushappclient.fragment.model;
 
 public class Notification {
     private int id;
     private int customerId;
+    private String imageURL;
     private String tittle;
     private String content;
 
-    public Notification(int id, int customerId, String tittle, String content) {
+    public Notification(int id, int customerId, String imageURL, String tittle, String content) {
         this.id = id;
         this.customerId = customerId;
+        this.imageURL = imageURL;
         this.tittle = tittle;
         this.content = content;
     }
+
+    public Notification(){}
 
     public int getId() {
         return id;
@@ -43,5 +47,13 @@ public class Notification {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 }

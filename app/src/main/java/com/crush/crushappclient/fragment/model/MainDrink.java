@@ -1,7 +1,4 @@
-package com.crush.crushappclient.model;
-
-import android.media.Image;
-import android.widget.ImageView;
+package com.crush.crushappclient.fragment.model;
 
 import java.io.Serializable;
 

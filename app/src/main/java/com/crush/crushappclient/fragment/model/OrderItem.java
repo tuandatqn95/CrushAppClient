@@ -1,4 +1,4 @@
-package com.crush.crushappclient.model;
+package com.crush.crushappclient.fragment.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;

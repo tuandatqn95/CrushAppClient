@@ -1,4 +1,4 @@
-package com.crush.crushappclient.model;
+package com.crush.crushappclient.fragment.model;
 
 public class MenuProfile {
     private int icon;

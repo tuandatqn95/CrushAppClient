@@ -14,11 +14,9 @@ import android.widget.ListView;
 import com.crush.crushappclient.R;
 import com.crush.crushappclient.activity.ProfileManagerActivity;
 import com.crush.crushappclient.adapter.MenuProfileAdapter;
-import com.crush.crushappclient.model.Customer;
-import com.crush.crushappclient.model.MenuProfile;
-import com.crush.crushappclient.ClassSupport.seedData;
+import com.crush.crushappclient.fragment.model.MenuProfile;
 
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,7 +37,12 @@ public class ProfileFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
         lvMenu = (ListView) rootView.findViewById(R.id.lvMenuProfile);
 
-        List<MenuProfile> menuProfileList = seedData.getmenuProfileList();
+        List<MenuProfile> menuProfileList = new ArrayList<>();
+        menuProfileList.add(new MenuProfile(R.drawable.icons8_user_50px,"Quản lý tài khoảng"));
+        menuProfileList.add(new MenuProfile(R.drawable.icons8_order_history_50px,"Lịch sử đơn hàng"));
+        menuProfileList.add(new MenuProfile(R.drawable.icons8_info_50px,"Giới thiệu"));
+        menuProfileList.add(new MenuProfile(R.drawable.icons8_settings_50px,"Cài đặt cấu hình"));
+        menuProfileList.add(new MenuProfile(R.drawable.icons8_whatsapp_50px,"Hỗ trợ"));
         MenuProfileAdapter adapter = new MenuProfileAdapter(getActivity(),menuProfileList);
         lvMenu.setAdapter(adapter);
         lvMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {

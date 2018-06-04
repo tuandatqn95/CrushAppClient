@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.crush.crushappclient.R;
-import com.crush.crushappclient.model.OrderItem;
+import com.crush.crushappclient.fragment.model.OrderItem;
 import com.crush.crushappclient.util.StringFormatUtils;
 
 import java.util.List;

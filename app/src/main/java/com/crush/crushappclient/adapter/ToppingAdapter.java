@@ -1,8 +1,5 @@
 package com.crush.crushappclient.adapter;
 
-import android.content.Context;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,10 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.crush.crushappclient.Interface.OnToppingClickedListener;
-import com.crush.crushappclient.activity.ProductInfoActivity;
 import com.crush.crushappclient.R;
-import com.crush.crushappclient.model.Topping;
+import com.crush.crushappclient.fragment.model.Topping;
 import com.crush.crushappclient.util.StringFormatUtils;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;

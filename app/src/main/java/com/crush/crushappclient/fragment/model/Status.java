@@ -1,10 +1,10 @@
-package com.crush.crushappclient.model;
+package com.crush.crushappclient.fragment.model;
 
-public class Role {
+public class Status {
     private int id;
     private String name;
 
-    public Role(int id, String name) {
+    public Status(int id, String name) {
         this.id = id;
         this.name = name;
     }

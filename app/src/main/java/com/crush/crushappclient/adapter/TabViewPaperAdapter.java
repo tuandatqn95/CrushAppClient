@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 
 import com.crush.crushappclient.fragment.TabProductFragment;
-import com.crush.crushappclient.model.Category;
+import com.crush.crushappclient.fragment.model.Category;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -16,9 +16,6 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nullable;
 
 public class TabViewPaperAdapter extends FragmentPagerAdapter implements EventListener<QuerySnapshot> {
 

@@ -4,19 +4,17 @@ package com.crush.crushappclient.fragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.crush.crushappclient.R;
 import com.crush.crushappclient.adapter.NotificationAdapter;
-import com.crush.crushappclient.model.Notification;
-import com.crush.crushappclient.ClassSupport.seedData;
-
-import java.util.List;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +22,10 @@ import java.util.List;
 public class NotificationFragment extends Fragment {
 
     private RecyclerView recyclerView;
+    private FirebaseFirestore mFirestore;
+    private Query mQuery;
+    private NotificationAdapter adapter;
+
 
     public NotificationFragment() {
         // Required empty public constructor
@@ -35,19 +37,16 @@ public class NotificationFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_notification, container, false);
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerViewNotification);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        List<Notification> notificationList = seedData.getNotificationList();
-        NotificationAdapter adapter = new NotificationAdapter(getActivity(),notificationList);
-        adapter.setOnItemClickedListener(new NotificationAdapter.OnItemClickedListener() {
-            @Override
-            public void onItemClick(Notification notification) {
-                Toast.makeText(getActivity(),notification.getId()+"", Toast.LENGTH_SHORT).show();
-            }
-        });
+        mFirestore = FirebaseFirestore.getInstance();
+        mQuery = mFirestore.collection("notifications");
+        adapter = new NotificationAdapter(mQuery);
+
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerViewNotification);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
+
         recyclerView.setAdapter(adapter);
 
 

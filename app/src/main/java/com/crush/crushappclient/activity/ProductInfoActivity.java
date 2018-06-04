@@ -16,9 +16,9 @@ import android.widget.TextView;
 
 import com.crush.crushappclient.R;
 import com.crush.crushappclient.adapter.ToppingAdapter;
-import com.crush.crushappclient.model.MainDrink;
-import com.crush.crushappclient.model.OrderItem;
-import com.crush.crushappclient.model.Topping;
+import com.crush.crushappclient.fragment.model.MainDrink;
+import com.crush.crushappclient.fragment.model.OrderItem;
+import com.crush.crushappclient.fragment.model.Topping;
 import com.crush.crushappclient.util.StringFormatUtils;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -36,6 +36,7 @@ import javax.annotation.Nullable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ProductInfoActivity extends AppCompatActivity implements EventListener<DocumentSnapshot> {
 
@@ -125,7 +126,7 @@ public class ProductInfoActivity extends AppCompatActivity implements EventListe
                 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        addEvent();
+        //addEvent();
 
     }
 
@@ -151,6 +152,25 @@ public class ProductInfoActivity extends AppCompatActivity implements EventListe
 
     }
 
+    @OnClick(R.id.imgvback)
+    public void OnImgBackClicked(View view){
+        Intent intent = new Intent();
+        setResult(Activity.RESULT_CANCELED, intent);
+        finish();
+    }
+
+    @OnClick(R.id.btnOrder)
+    public void OnBtnOrderClicked(View view){
+        Intent resultIntent = new Intent();
+        List<Topping> listTopping = new ArrayList<>();
+        for (DocumentSnapshot topping : toppingList) {
+            listTopping.add(topping.toObject(Topping.class));
+        }
+        OrderItem orderItem = new OrderItem(drink, listTopping, npQuantity.getValue(), price);
+        resultIntent.putExtra(KEY_ORDER_ITEM, (Serializable) orderItem);
+        setResult(Activity.RESULT_OK, resultIntent);
+        finish();
+    }
 
     private void addEvent() {
         imgvBack.setOnClickListener(new View.OnClickListener() {
@@ -165,13 +185,10 @@ public class ProductInfoActivity extends AppCompatActivity implements EventListe
             @Override
             public void onClick(View v) {
                 Intent intentResult = new Intent();
-
                 List<Topping> listTopping = new ArrayList<>();
                 for (DocumentSnapshot topping : toppingList) {
                     listTopping.add(topping.toObject(Topping.class));
                 }
-
-
                 OrderItem orderItem = new OrderItem(drink, listTopping, npQuantity.getValue(), price);
                 intentResult.putExtra(KEY_ORDER_ITEM, (Serializable) orderItem);
                 setResult(Activity.RESULT_OK, intentResult);
