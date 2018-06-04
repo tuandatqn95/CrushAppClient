@@ -14,7 +14,7 @@ import android.widget.ListView;
 import com.crush.crushappclient.R;
 import com.crush.crushappclient.activity.ProfileManagerActivity;
 import com.crush.crushappclient.adapter.MenuProfileAdapter;
-import com.crush.crushappclient.fragment.model.MenuProfile;
+import com.crush.crushappclient.model.MenuProfile;
 
 import java.util.ArrayList;
 import java.util.List;

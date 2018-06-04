@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.crush.crushappclient.R;
-import com.crush.crushappclient.fragment.model.Topping;
+import com.crush.crushappclient.model.Topping;
 import com.crush.crushappclient.util.StringFormatUtils;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;

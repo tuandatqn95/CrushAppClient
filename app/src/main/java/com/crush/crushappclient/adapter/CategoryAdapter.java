@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.crush.crushappclient.fragment.model.Category;
+import com.crush.crushappclient.model.Category;
 
 import java.util.List;
 

@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.crush.crushappclient.R;
-import com.crush.crushappclient.fragment.model.MenuProfile;
+import com.crush.crushappclient.model.MenuProfile;
 
 import java.util.List;
 

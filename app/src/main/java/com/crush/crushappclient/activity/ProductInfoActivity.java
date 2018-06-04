@@ -16,9 +16,9 @@ import android.widget.TextView;
 
 import com.crush.crushappclient.R;
 import com.crush.crushappclient.adapter.ToppingAdapter;
-import com.crush.crushappclient.fragment.model.MainDrink;
-import com.crush.crushappclient.fragment.model.OrderItem;
-import com.crush.crushappclient.fragment.model.Topping;
+import com.crush.crushappclient.model.MainDrink;
+import com.crush.crushappclient.model.OrderItem;
+import com.crush.crushappclient.model.Topping;
 import com.crush.crushappclient.util.StringFormatUtils;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;

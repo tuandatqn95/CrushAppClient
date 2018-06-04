@@ -21,7 +21,7 @@ import com.crush.crushappclient.R;
 import com.crush.crushappclient.activity.CartActivity;
 import com.crush.crushappclient.activity.ProductInfoActivity;
 import com.crush.crushappclient.adapter.TabViewPaperAdapter;
-import com.crush.crushappclient.fragment.model.OrderItem;
+import com.crush.crushappclient.model.OrderItem;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
