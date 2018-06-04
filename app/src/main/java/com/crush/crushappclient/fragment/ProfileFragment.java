@@ -43,6 +43,7 @@ public class ProfileFragment extends Fragment {
         menuProfileList.add(new MenuProfile(R.drawable.icons8_info_50px,"Giới thiệu"));
         menuProfileList.add(new MenuProfile(R.drawable.icons8_settings_50px,"Cài đặt cấu hình"));
         menuProfileList.add(new MenuProfile(R.drawable.icons8_whatsapp_50px,"Hỗ trợ"));
+        menuProfileList.add(new MenuProfile(R.drawable.icons8_whatsapp_50px,"Đăng xuất"));
         MenuProfileAdapter adapter = new MenuProfileAdapter(getActivity(),menuProfileList);
         lvMenu.setAdapter(adapter);
         lvMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
