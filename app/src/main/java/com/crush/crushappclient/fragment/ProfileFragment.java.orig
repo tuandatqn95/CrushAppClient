@@ -64,6 +64,14 @@ public class ProfileFragment extends Fragment implements EventListener<DocumentS
 
 
         List<MenuProfile> menuProfileList = new ArrayList<>();
+<<<<<<< HEAD
+        menuProfileList.add(new MenuProfile(R.drawable.icons8_user_50px, "Account management"));
+        menuProfileList.add(new MenuProfile(R.drawable.icons8_order_history_50px, "Orders"));
+        menuProfileList.add(new MenuProfile(R.drawable.icons8_info_50px, "About"));
+        menuProfileList.add(new MenuProfile(R.drawable.icons8_settings_50px, "Setting"));
+        menuProfileList.add(new MenuProfile(R.drawable.icons8_whatsapp_50px, "Support"));
+        MenuProfileAdapter adapter = new MenuProfileAdapter(getActivity(), menuProfileList);
+=======
         menuProfileList.add(new MenuProfile(R.drawable.icons8_user_50px,"Quản lý tài khoảng"));
         menuProfileList.add(new MenuProfile(R.drawable.icons8_order_history_50px,"Lịch sử đơn hàng"));
         menuProfileList.add(new MenuProfile(R.drawable.icons8_info_50px,"Giới thiệu"));
@@ -71,6 +79,7 @@ public class ProfileFragment extends Fragment implements EventListener<DocumentS
         menuProfileList.add(new MenuProfile(R.drawable.icons8_whatsapp_50px,"Hỗ trợ"));
         menuProfileList.add(new MenuProfile(R.drawable.icons8_whatsapp_50px,"Đăng xuất"));
         MenuProfileAdapter adapter = new MenuProfileAdapter(getActivity(),menuProfileList);
+>>>>>>> 4db3fff579b08f09fac5617d4abb2cf962235d06
         lvMenu.setAdapter(adapter);
         lvMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
