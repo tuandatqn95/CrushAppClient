@@ -2,6 +2,7 @@ package com.crush.crushappclient.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,7 +54,8 @@ public class CartActivity extends AppCompatActivity {
     Toolbar toolbar;
 
     private FirebaseFirestore mFirestore;
-    private long totalPrice=0;
+    private long totalPrice = 0;
+    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,9 +82,16 @@ public class CartActivity extends AppCompatActivity {
     public void OnBtnCartCLicked(View view) {
         Order order = new Order();
         // TODO: 6/3/2018 - Add more information into order
-        //order.setAddress("");
+        dialog = new Dialog(CartActivity.this);
+        dialog.setContentView(R.layout.order_info_item_layout);
+        dialog.setTitle("Order infomation");
+        dialog.show();
+
+        order.setAddress("");
         //order.setUserId("");
         //order.setNote("");
+
+
         order.setStatus("Đã đặt hàng");
         order.setTotalPrice(totalPrice);
 
@@ -133,6 +143,11 @@ public class CartActivity extends AppCompatActivity {
             totalPrice += orderItem.getPrice() * orderItem.getQuantity();
         }
         txtTotalPrice.setText(StringFormatUtils.FormatCurrency(totalPrice));
+    }
+
+    @OnClick(R.id.order_info_ok)
+    public void orderInfoOkClicked(){
+        dialog.dismiss();
     }
 
     @SuppressLint("ResourceAsColor")
