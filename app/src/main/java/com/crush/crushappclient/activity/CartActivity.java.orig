@@ -84,9 +84,18 @@ public class CartActivity extends AppCompatActivity {
     public void OnBtnCartCLicked(View view) {
         Order order = new Order();
         // TODO: 6/3/2018 - Add more information into order
+<<<<<<< HEAD
+        //order.setAddress("");
+        order.setUserId(FirebaseAuth.getInstance().getUid());
+=======
+        dialog = new Dialog(CartActivity.this);
+        dialog.setContentView(R.layout.order_info_item_layout);
+        dialog.setTitle("Order infomation");
+        dialog.show();
 
         order.setAddress("");
-        order.setUserId(FirebaseAuth.getInstance().getUid());
+        //order.setUserId("");
+>>>>>>> 4db3fff579b08f09fac5617d4abb2cf962235d06
         //order.setNote("");
 
 
@@ -142,7 +151,10 @@ public class CartActivity extends AppCompatActivity {
         txtTotalPrice.setText(StringFormatUtils.FormatCurrency(totalPrice));
     }
 
-
+    @OnClick(R.id.order_info_ok)
+    public void orderInfoOkClicked(){
+        dialog.dismiss();
+    }
 
     @SuppressLint("ResourceAsColor")
     private void addToolBar(){

@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.WindowManager;
 
@@ -24,11 +25,18 @@ import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 
 import java.util.Collections;
 
-public class MainActivity extends AppCompatActivity {
+import javax.annotation.Nullable;
+
+public class MainActivity extends AppCompatActivity implements EventListener<DocumentSnapshot> {
     private static final String TAG = "MainActivity";
     private static final int REQUEST_CODE = 9;
     private static final int RC_SIGN_IN = 9001;
@@ -55,7 +63,9 @@ public class MainActivity extends AppCompatActivity {
         }
     };
     private MainActivityViewModel mViewModel;
-
+    private FirebaseFirestore mFirestore;
+    private DocumentReference mUserRef;
+    private ListenerRegistration mUserRegistration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        mFirestore = FirebaseFirestore.getInstance();
 
         viewPaper = (ViewPager) findViewById(R.id.navigationViewPaper);
         setupViewPaper(viewPaper);
@@ -110,6 +122,18 @@ public class MainActivity extends AppCompatActivity {
         if (shouldStartSignIn()) {
             startSignIn();
             return;
+        } else {
+            mUserRef = mFirestore.collection("customers").document(FirebaseAuth.getInstance().getUid());
+            mUserRegistration = mUserRef.addSnapshotListener(this);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mUserRegistration != null) {
+            mUserRegistration.remove();
+            mUserRegistration = null;
         }
     }
 
@@ -144,6 +168,8 @@ public class MainActivity extends AppCompatActivity {
             IdpResponse response = IdpResponse.fromResultIntent(data);
             if (resultCode == RESULT_OK) {
                 mViewModel.setIsSigningIn(true);
+                mUserRef = mFirestore.collection("customers").document(FirebaseAuth.getInstance().getUid());
+                mUserRegistration = mUserRef.addSnapshotListener(this);
             } else {
                 if (response == null) {
                     // User pressed the back button.
@@ -180,5 +206,14 @@ public class MainActivity extends AppCompatActivity {
                 }).create();
 
         dialog.show();
+    }
+
+    @Override
+    public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+        Log.d(TAG, "onEvent:snapshot "+snapshot);
+        if(snapshot.getData() == null){
+            Intent updateInfoIntent  = new Intent(this,ProfileManagerActivity.class);
+            startActivity(updateInfoIntent);
+        }
     }
 }
