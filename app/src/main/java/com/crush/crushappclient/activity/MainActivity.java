@@ -107,10 +107,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         // Start sign in if necessary
-//        if (shouldStartSignIn()) {
-//            startSignIn();
-//            return;
-//        }
+        if (shouldStartSignIn()) {
+            startSignIn();
+            return;
+        }
     }
 
     private void setupViewPaper(ViewPager viewPaper) {
