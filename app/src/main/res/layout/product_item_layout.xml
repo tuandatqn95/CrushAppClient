@@ -20,7 +20,7 @@
         android:layout_weight="1"
         android:padding="@dimen/activity_margin"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/trasua" />
+        app:srcCompat="@drawable/default_drink" />
     <TextView
         android:id="@+id/drink_name"
         android:layout_width="wrap_content"
