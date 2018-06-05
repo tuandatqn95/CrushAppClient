@@ -58,7 +58,7 @@ public class NotificationAdapter extends FirestoreAdapter<NotificationAdapter.Vi
 
         public void bind(DocumentSnapshot snapshot) {
             Notification notification = snapshot.toObject(Notification.class);
-            Glide.with(itemView.getContext()).load(notification.getImageURL()).into(notificationImage);
+            Glide.with(itemView.getContext()).load(notification.getImageURL()).placeholder(R.drawable.loading).error(R.drawable.crush_logo).into(notificationImage);
             notificationTittle.setText(notification.getTittle());
             notificationContent.setText(notification.getContent());
         }

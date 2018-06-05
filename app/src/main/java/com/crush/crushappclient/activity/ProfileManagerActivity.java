@@ -1,6 +1,7 @@
 package com.crush.crushappclient.activity;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crush.crushappclient.R;
+import com.crush.crushappclient.fragment.ProfileFragment;
 import com.crush.crushappclient.model.Customer;
 import com.crush.crushappclient.util.StringFormatUtils;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -57,6 +59,9 @@ public class ProfileManagerActivity extends AppCompatActivity implements EventLi
 
     @BindView(R.id.edtemail)
     EditText email;
+
+    @BindView(R.id.customer_name)
+    TextView customerName;
 
 
     Calendar cal;
@@ -105,13 +110,12 @@ public class ProfileManagerActivity extends AppCompatActivity implements EventLi
             public void onDateSet(DatePicker view, int year,
                                   int monthOfYear,
                                   int dayOfMonth) {
-                date.setTag(new Date(year,monthOfYear,dayOfMonth));
-                date.setText((dayOfMonth > 9 ? dayOfMonth : "0" + dayOfMonth) + "/" + (monthOfYear > 8 ? monthOfYear + 1 : "0" + (monthOfYear + 1)) + "/" + year);
+                date.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                date.setTag(new Date(year-1900,monthOfYear,dayOfMonth));
             }
         };
 
-        String s = date.getText() + "";
-        
+        String s = date.getText()+"";
         String strArrtmp[] = s.split("/");
         int ngay = Integer.parseInt(strArrtmp[0]);
         int thang = Integer.parseInt(strArrtmp[1]) - 1;
@@ -146,7 +150,10 @@ public class ProfileManagerActivity extends AppCompatActivity implements EventLi
             }
         });
     }
-
+    @OnClick(R.id.profile_manager_back)
+    public void OnProfileManagerBackClicked(){
+        finish();
+    }
     private Task<Void> addCustomer(final Customer customer) {
         // Create reference for new rating, for use inside the transaction
         final DocumentReference customerRef = mFirestore.collection("customers").document(FirebaseAuth.getInstance().getUid());
@@ -176,11 +183,18 @@ public class ProfileManagerActivity extends AppCompatActivity implements EventLi
     private void onUserLoaded(Customer customer) {
 
         Log.d(TAG, "onUserLoaded: Customer" + customer);
+        customerName.setText(customer.getName());
         name.setText(customer.getName());
         address.setText(customer.getAddress());
-        date.setText(customer.getBirth()+"");
         email.setText(customer.getEmail());
         spinnerSex.setSelection(getSpinnerValue(customer.getGender()));
+        if(customer.getBirth() == null){
+            date.setText(StringFormatUtils.getFormatCurrentDate());
+        }
+        else{
+            Log.d(TAG, "onUserLoaded: "+customer.getBirth());
+            date.setText(StringFormatUtils.FormatToDate(customer.getBirth()));
+        }
     }
 
     private int getSpinnerValue(String value){

@@ -61,7 +61,7 @@ public class MainDrinkAdapter extends FirestoreAdapter<MainDrinkAdapter.ViewHold
 
         public void bind(final DocumentSnapshot snapshot, final OnMaindrinkSelectedListener mListener) {
             MainDrink mainDrink = snapshot.toObject(MainDrink.class);
-            Glide.with(drinkImage.getContext()).load(mainDrink.getImageURL()).into(drinkImage);
+            Glide.with(drinkImage.getContext()).load(mainDrink.getImageURL()).placeholder(R.drawable.loading).error(R.drawable.trasua).into(drinkImage);
             maindrinkName.setText(mainDrink.getName());
             maindrinkPrice.setText(StringFormatUtils.FormatCurrency(mainDrink.getPrice()));
 

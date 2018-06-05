@@ -34,7 +34,7 @@
             android:layout_alignLeft="@+id/txtvdrinkName"
             android:layout_marginTop="16dp"
             android:background="?attr/selectableItemBackground"
-            app:srcCompat="@drawable/icons8_back_50px_1" />
+            app:srcCompat="@drawable/icons8_long_arrow_left_50px" />
 
         <TextView
             android:id="@+id/txtvdrinkName"

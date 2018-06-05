@@ -13,33 +13,6 @@
         android:layout_height="wrap_content"
         android:background="#383838">
 
-       <!-- <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/crush_logo_yellow" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:text="Crush Milk Tea"
-                android:textColor="@color/colorMainYellow" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-            </LinearLayout>
-
-        </LinearLayout>
--->
-
     </android.support.v7.widget.Toolbar>
     <ScrollView
         android:layout_above="@+id/cart_footer"
@@ -80,10 +53,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
+                android:scrollbars="vertical"
                 android:padding="10dp"
-                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginVertical="10dp"
-                android:hint="Address" />
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginBottom="5dp"
+                android:hint="Address"/>
 
             <EditText
                 android:id="@+id/order_note"
@@ -92,7 +68,7 @@
                 android:background="@null"
                 android:padding="10dp"
                 android:layout_marginHorizontal="20dp"
-                android:layout_marginVertical="10dp"
+                android:layout_marginVertical="5dp"
                 android:hint="Note"/>
         </LinearLayout>
 

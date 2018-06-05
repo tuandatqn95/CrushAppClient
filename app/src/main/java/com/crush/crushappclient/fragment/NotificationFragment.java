@@ -24,7 +24,7 @@ public class NotificationFragment extends Fragment {
     private RecyclerView recyclerView;
     private FirebaseFirestore mFirestore;
     private Query mQuery;
-    private NotificationAdapter adapter;
+    private NotificationAdapter mAdapter;
 
 
     public NotificationFragment() {
@@ -40,18 +40,33 @@ public class NotificationFragment extends Fragment {
 
         mFirestore = FirebaseFirestore.getInstance();
         mQuery = mFirestore.collection("notifications");
-        adapter = new NotificationAdapter(mQuery);
+        mAdapter = new NotificationAdapter(mQuery);
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerViewNotification);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(mAdapter);
 
 
         return rootView;
 
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(mAdapter !=null){
+            mAdapter.startListening();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAdapter != null) {
+            mAdapter.stopListening();
+        }
+    }
 }

@@ -92,17 +92,20 @@ public class CartActivity extends AppCompatActivity {
         rvOrderDrink.addItemDecoration(new DividerItemDecoration(rvOrderDrink.getContext(), DividerItemDecoration.VERTICAL));
 
         setTotalPrice();
+        addBackGround();
 
-        GradientDrawable background = new GradientDrawable();
-        background.setShape(GradientDrawable.RECTANGLE);
-        background.setCornerRadius(15);
-        background.setStroke(1, Color.YELLOW);
-        orderAddress.setBackground(background);
-        orderNote.setBackground(background);
     }
 
     @OnClick(R.id.btn_cart)
     public void OnBtnCartCLicked(View view) {
+        if (orderItemList.size() < 1){
+            Toast.makeText(CartActivity.this, "Please order!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(orderAddress.getText()+""==""){
+            Toast.makeText(CartActivity.this, "Please fill address", Toast.LENGTH_SHORT).show();
+            return;
+        }
         Order order = new Order();
         order.setUserId(FirebaseAuth.getInstance().getUid());
         order.setAddress(orderAddress.getText().toString());
@@ -189,5 +192,18 @@ public class CartActivity extends AppCompatActivity {
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void addBackGround() {
+        GradientDrawable orderbackground = new GradientDrawable();
+        orderbackground.setShape(GradientDrawable.RECTANGLE);
+        orderbackground.setCornerRadius(15);
+        orderbackground.setStroke(1,Color.BLACK);
+        GradientDrawable notebackground = new GradientDrawable();
+        notebackground.setShape(GradientDrawable.RECTANGLE);
+        notebackground.setCornerRadius(15);
+        notebackground.setStroke(1,Color.BLACK);
+        orderAddress.setBackground(orderbackground);
+        orderNote.setBackground(notebackground);
     }
 }

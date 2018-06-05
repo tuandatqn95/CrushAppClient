@@ -74,7 +74,7 @@ public class ToppingAdapter extends FirestoreAdapter<ToppingAdapter.ViewHolder> 
 
         public void bind(final DocumentSnapshot snapshot, int position, final OnToppingSelectedListener mListener) {
             Topping topping = snapshot.toObject(Topping.class);
-            Glide.with(toppingImage.getContext()).load(topping.getImageURL()).into(toppingImage);
+            Glide.with(toppingImage.getContext()).load(topping.getImageURL()).placeholder(R.drawable.loading).error(R.drawable.topping).into(toppingImage);
             toppingName.setText(topping.getName());
             toppingPrice.setText(StringFormatUtils.FormatCurrency(topping.getPrice()));
             selectedTopping.setImageResource(R.drawable.check);

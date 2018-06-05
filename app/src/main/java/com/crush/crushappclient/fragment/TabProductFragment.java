@@ -78,8 +78,7 @@ public class TabProductFragment extends Fragment {
         });
 
         recyclerViewProduct.setAdapter(mAdapter);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(),3);
-        recyclerViewProduct.setLayoutManager(layoutManager);
+        recyclerViewProduct.setLayoutManager(new GridLayoutManager(getActivity(),3));
         recyclerViewProduct.setItemAnimator(new DefaultItemAnimator());
         recyclerViewProduct.addItemDecoration(new SeparatorDecoration(getActivity(),Color.TRANSPARENT,3f));
 

@@ -28,13 +28,14 @@
 
         <!-- Back button -->
         <ImageView
-            android:src="@drawable/icons8_back_50px_1"
+            android:id="@+id/profile_manager_back"
+            android:src="@drawable/icons8_long_arrow_left_50px"
             android:layout_margin="10dp"
-            android:layout_width="25dp"
-            android:layout_height="25dp" />
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/customer_avatar"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:scaleType="fitCenter"
@@ -44,18 +45,31 @@
             android:layout_marginTop="50dp"
             android:src="@drawable/crush_logo" />
 
+        <TextView
+            android:id="@+id/customer_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/customer_avatar"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="username"
+            android:textAlignment="center"
+            android:textColor="#fff"/>
+
     </RelativeLayout>
     <LinearLayout
         android:orientation="vertical"
         android:background="#F2F2F2"
-        android:padding="15dp"
+        android:paddingVertical="15dp"
         android:layout_weight="10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
+            android:background="#fff"
             android:orientation="horizontal"
-            android:padding="1dp"
-            android:layout_margin="5dp"
+            android:paddingHorizontal="15dp"
+            android:layout_marginVertical="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
@@ -68,15 +82,16 @@
                 android:hint="Họ và tên"
                 android:textColor="@color/colorLightGray"
                 android:layout_marginHorizontal="15dp"
-                android:layout_marginVertical="5dp"
+                android:layout_marginVertical="10dp"
                 android:background="@null"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <LinearLayout
+            android:background="#fff"
             android:orientation="horizontal"
-            android:padding="1dp"
-            android:layout_margin="5dp"
+            android:paddingHorizontal="15dp"
+            android:layout_marginVertical="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
@@ -89,15 +104,16 @@
                 android:hint="Địa chỉ"
                 android:textColor="@color/colorLightGray"
                 android:layout_marginHorizontal="15dp"
-                android:layout_marginVertical="5dp"
+                android:layout_marginVertical="10dp"
                 android:background="@null"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <LinearLayout
+            android:background="#fff"
             android:orientation="horizontal"
-            android:padding="1dp"
-            android:layout_margin="5dp"
+            android:paddingHorizontal="15dp"
+            android:layout_marginVertical="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
@@ -110,36 +126,40 @@
                 android:textSize="17dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginVertical="10dp"
                 android:text="21/5/2018" />
 
         </LinearLayout>
         <LinearLayout
+            android:background="#fff"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingHorizontal="15dp"
+            android:layout_marginVertical="5dp"
             android:orientation="horizontal">
 
             <ImageView
+                android:layout_margin="10dp"
                 android:layout_width="20dp"
-                android:layout_height="22dp"
-                android:layout_margin="20dp"
+                android:layout_height="20dp"
                 android:src="@drawable/icons8_gender_50px_1" />
 
             <Spinner
                 android:id="@+id/spinnerSex"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="0dp"
-                android:layout_marginVertical="10dp"
+                android:layout_marginVertical="7dp"
+                android:layout_marginHorizontal="10dp"
                 android:entries="@array/spinnerItems">
 
             </Spinner>
         </LinearLayout>
         <LinearLayout
+            android:background="#fff"
             android:orientation="horizontal"
-            android:padding="1dp"
-            android:layout_margin="5dp"
+            android:paddingHorizontal="15dp"
+            android:layout_marginVertical="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
@@ -153,14 +173,15 @@
                 android:textSize="17dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginVertical="10dp"
                 android:text="0123456789 " />
         </LinearLayout>
         <LinearLayout
+            android:background="#fff"
             android:orientation="horizontal"
-            android:padding="1dp"
-            android:layout_margin="5dp"
+            android:paddingHorizontal="15dp"
+            android:layout_marginVertical="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
@@ -173,7 +194,8 @@
                 android:hint="Email"
                 android:textColor="@color/colorLightGray"
                 android:background="@null"
-                android:layout_marginLeft="15dp"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginVertical="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress" />
