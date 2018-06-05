@@ -24,6 +24,7 @@ import com.google.firebase.firestore.Query;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import pl.droidsonroids.gif.GifTextView;
 
 
 public class TabProductFragment extends Fragment {
@@ -55,13 +56,10 @@ public class TabProductFragment extends Fragment {
 
         if (getArguments() != null) {
             categoryId =  getArguments().getString(ARG_PARAM);
-
         }
-
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_tab_product, container, false);
         ButterKnife.bind(this,rootView);
-
         mFirestore = FirebaseFirestore.getInstance();
         mQuery = mFirestore.collection("categories").document(categoryId).collection("maindrinks");
 
@@ -82,7 +80,6 @@ public class TabProductFragment extends Fragment {
         recyclerViewProduct.setItemAnimator(new DefaultItemAnimator());
         recyclerViewProduct.addItemDecoration(new SeparatorDecoration(getActivity(),Color.TRANSPARENT,3f));
 
-
         return rootView;
     }
 
@@ -100,8 +97,9 @@ public class TabProductFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        if(mAdapter != null)
+        if(mAdapter != null) {
             mAdapter.stopListening();
+        }
     }
 
     public static TabProductFragment newInstance(String categoryId) {

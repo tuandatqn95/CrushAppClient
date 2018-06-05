@@ -143,7 +143,7 @@ public class ProductInfoActivity extends AppCompatActivity implements EventListe
     protected void onStop() {
         super.onStop();
         if (adapter != null) {
-            adapter.startListening();
+            adapter.stopListening();
         }
         if (mDrinkRegistration != null) {
             mDrinkRegistration.remove();

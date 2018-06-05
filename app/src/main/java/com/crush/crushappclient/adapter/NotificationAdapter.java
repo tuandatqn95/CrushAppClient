@@ -44,7 +44,6 @@ public class NotificationAdapter extends FirestoreAdapter<NotificationAdapter.Vi
 
         @BindView(R.id.notification_image)
         ImageView notificationImage;
-
         @BindView(R.id.notification_tittle)
         TextView notificationTittle;
 
