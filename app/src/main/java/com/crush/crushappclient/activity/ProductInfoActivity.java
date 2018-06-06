@@ -2,6 +2,7 @@ package com.crush.crushappclient.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.crush.crushappclient.R;
 import com.crush.crushappclient.adapter.ToppingAdapter;
 import com.crush.crushappclient.model.MainDrink;
@@ -210,6 +212,7 @@ public class ProductInfoActivity extends AppCompatActivity implements EventListe
         this.price = getDrinkPrice();
         txtvPrice.setText(StringFormatUtils.FormatCurrency(price));
         txtvName.setText(drink.getName());
+        Glide.with(ProductInfoActivity.this).load(drink.getImageURL()).placeholder(R.drawable.tocotocoview).error(R.drawable.tocotocoview).into(imgvDrink);
     }
 
 

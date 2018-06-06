@@ -14,6 +14,7 @@
         android:id="@+id/txtvname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:textColor="@color/colorDarkGray"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
@@ -28,8 +29,7 @@
         android:layout_width="95dp"
         android:layout_height="70dp"
         android:layout_gravity="center"
-        android:layout_weight="1"
-        app:srcCompat="@drawable/default_topping" />
+        android:layout_weight="1" />
 
 
     <TextView
@@ -39,6 +39,7 @@
         android:textColor="@color/colorAccent"
         android:textSize="12dp"
         android:layout_gravity="center"
+        android:gravity="center"
         android:text="20.000 đ"/>
 
     <ImageView

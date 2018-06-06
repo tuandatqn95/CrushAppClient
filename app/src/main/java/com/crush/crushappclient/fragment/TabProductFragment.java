@@ -37,13 +37,13 @@ public class TabProductFragment extends Fragment {
     @BindView(R.id.recyclerViewProduct)
     RecyclerView recyclerViewProduct;
 
-    MainDrinkAdapter mAdapter;
+    private MainDrinkAdapter mAdapter;
 
-    String categoryId;
-    DocumentReference categoryRef;
+    private String categoryId;
+    private DocumentReference categoryRef;
 
-    FirebaseFirestore mFirestore;
-    Query mQuery;
+    private FirebaseFirestore mFirestore;
+    private Query mQuery;
 
 
     public TabProductFragment() {

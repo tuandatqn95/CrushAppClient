@@ -10,6 +10,7 @@ public class Order {
     private String note;
     private String status;
     private long totalPrice;
+    private long amount;
     private @ServerTimestamp
     Date createOn;
 
@@ -62,5 +63,13 @@ public class Order {
 
     public void setCreateOn(Date createOn) {
         this.createOn = createOn;
+    }
+
+    public long getAmount() {
+        return amount;
+    }
+
+    public void setAmount(long amount) {
+        this.amount = amount;
     }
 }

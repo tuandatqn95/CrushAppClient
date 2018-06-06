@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,25 +15,17 @@ import android.widget.Toast;
 import com.crush.crushappclient.R;
 import com.crush.crushappclient.activity.MainActivity;
 import com.crush.crushappclient.activity.ProfileManagerActivity;
-import com.crush.crushappclient.adapter.MenuProfileAdapter;
-import com.crush.crushappclient.model.Customer;
-import com.crush.crushappclient.model.MenuProfile;
+import com.crush.crushappclient.activity.SupportActivity;
+import com.crush.crushappclient.adapter.MenuListViewAdapter;
+import com.crush.crushappclient.model.MenuListView;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.ListenerRegistration;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Nullable;
+import butterknife.BindView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,9 +33,7 @@ import javax.annotation.Nullable;
 public class ProfileFragment extends Fragment{
     private static final String TAG = "ProfileFragment";
 
-    ListView lvMenu;
-    RecyclerView recyclerViewMenuProfile;
-
+    ListView lvMenuProfile;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -56,23 +44,31 @@ public class ProfileFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
-        lvMenu = (ListView) rootView.findViewById(R.id.lvMenuProfile);
-
-        List<MenuProfile> menuProfileList = new ArrayList<>();
-        menuProfileList.add(new MenuProfile(R.drawable.icons8_user_50px, "Quản lý tài khoảng"));
-        menuProfileList.add(new MenuProfile(R.drawable.icons8_order_history_50px, "Lịch sử đơn hàng"));
-        menuProfileList.add(new MenuProfile(R.drawable.icons8_info_50px, "Giới thiệu"));
-        menuProfileList.add(new MenuProfile(R.drawable.icons8_settings_50px, "Cài đặt cấu hình"));
-        menuProfileList.add(new MenuProfile(R.drawable.icons8_whatsapp_50px, "Hỗ trợ"));
-        menuProfileList.add(new MenuProfile(R.drawable.icons8_exit_50px_1, "Đăng xuất"));
-        MenuProfileAdapter adapter = new MenuProfileAdapter(getActivity(), menuProfileList);
-        lvMenu.setAdapter(adapter);
-        lvMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lvMenuProfile = (ListView) rootView.findViewById(R.id.lvMenuProfile);
+        List<MenuListView> menuListViewList = new ArrayList<>();
+        menuListViewList.add(new MenuListView(R.drawable.icons8_user_50px, "Quản lý tài khoảng"));
+        menuListViewList.add(new MenuListView(R.drawable.icons8_order_history_50px, "Lịch sử đơn hàng"));
+        menuListViewList.add(new MenuListView(R.drawable.icons8_info_50px, "Giới thiệu"));
+        menuListViewList.add(new MenuListView(R.drawable.icons8_settings_50px, "Cài đặt cấu hình"));
+        menuListViewList.add(new MenuListView(R.drawable.icons8_whatsapp_50px, "Hỗ trợ"));
+        menuListViewList.add(new MenuListView(R.drawable.icons8_exit_50px_1, "Đăng xuất"));
+        MenuListViewAdapter adapter = new MenuListViewAdapter(getActivity(), menuListViewList);
+        lvMenuProfile.setAdapter(adapter);
+        lvMenuProfile.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 switch (i) {
                     case 0:
                         updateCustomer();
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        support();
                         break;
                     case 5:
                         logout();
@@ -83,6 +79,11 @@ public class ProfileFragment extends Fragment{
         });
 
         return rootView;
+    }
+
+    private void support() {
+        Intent intent = new Intent(getActivity(), SupportActivity.class);
+        startActivity(intent);
     }
 
     private void logout() {

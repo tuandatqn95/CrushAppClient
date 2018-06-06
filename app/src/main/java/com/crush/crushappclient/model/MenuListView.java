@@ -1,13 +1,15 @@
 package com.crush.crushappclient.model;
 
-public class MenuProfile {
+public class MenuListView {
     private int icon;
     private String content;
 
-    public MenuProfile(int icon, String content) {
+    public MenuListView(int icon, String content) {
         this.icon = icon;
         this.content = content;
     }
+
+    public MenuListView(){}
 
     public int getIcon() {
         return icon;

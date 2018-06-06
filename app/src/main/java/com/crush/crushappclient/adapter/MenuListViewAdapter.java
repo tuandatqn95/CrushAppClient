@@ -9,22 +9,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.crush.crushappclient.R;
-import com.crush.crushappclient.model.MenuProfile;
+import com.crush.crushappclient.model.MenuListView;
 
 import java.util.List;
 
-public class MenuProfileAdapter extends BaseAdapter {
+public class MenuListViewAdapter extends BaseAdapter {
     private Context context;
-    private List<MenuProfile> menuProfileList;
+    private List<MenuListView> menuListViewList;
 
-    public MenuProfileAdapter(Context context, List<MenuProfile> menuProfileList) {
+    public MenuListViewAdapter(Context context, List<MenuListView> menuListViewList) {
         this.context = context;
-        this.menuProfileList = menuProfileList;
+        this.menuListViewList = menuListViewList;
     }
 
     @Override
     public int getCount() {
-        return menuProfileList.size();
+        return menuListViewList.size();
     }
 
     @Override
@@ -50,9 +50,9 @@ public class MenuProfileAdapter extends BaseAdapter {
         else{
             viewHolder = (ViewHolder) view.getTag();
         }
-        MenuProfile menuProfile = menuProfileList.get(i);
-        viewHolder.imgvIcon.setImageResource(menuProfile.getIcon());
-        viewHolder.txtvContent.setText(menuProfile.getContent());
+        MenuListView menuListView = menuListViewList.get(i);
+        viewHolder.imgvIcon.setImageResource(menuListView.getIcon());
+        viewHolder.txtvContent.setText(menuListView.getContent());
 
         return view;
     }

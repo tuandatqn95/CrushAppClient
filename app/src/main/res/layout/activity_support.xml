@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.SupportActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/support_activity_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#383838"
+        android:theme="@style/ToolbarStyle">
+
+    </android.support.v7.widget.Toolbar>
+
+    <ListView
+        android:id="@+id/lvMenuSupport"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+    </ListView>
+
+</LinearLayout>

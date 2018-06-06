@@ -3,17 +3,21 @@ package com.crush.crushappclient.activity;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -68,7 +72,8 @@ public class CartActivity extends AppCompatActivity {
 
     private FirebaseFirestore mFirestore;
     private long totalPrice = 0;
-    private Dialog dialog;
+    private OrderItemAdapter adapter;
+    private ProgressDialog mProgressDialog;
     private String address="";
     private String note="";
 
@@ -84,7 +89,7 @@ public class CartActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         orderItemList = (List<OrderItem>) intent.getSerializableExtra(ProductFragment.LIST_ORDER_ITEM);
-        OrderItemAdapter adapter = new OrderItemAdapter(orderItemList);
+        adapter = new OrderItemAdapter(orderItemList);
 
         rvOrderDrink.setAdapter(adapter);
         rvOrderDrink.setLayoutManager(new LinearLayoutManager(this));
@@ -106,16 +111,35 @@ public class CartActivity extends AppCompatActivity {
             Toast.makeText(CartActivity.this, "Please fill address", Toast.LENGTH_SHORT).show();
             return;
         }
-        Order order = new Order();
-        order.setUserId(FirebaseAuth.getInstance().getUid());
-        order.setAddress(orderAddress.getText().toString());
-        order.setNote(orderNote.getText().toString());
-        order.setStatus("ORDERED");
-        order.setTotalPrice(totalPrice);
-
-        onCheckout(order, orderItemList);
+        showAlertDialog();
     }
-
+    public void showAlertDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Confirm");
+        builder.setMessage("Do you want to order?");
+        builder.setCancelable(false);
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                showProgressDialog("Ordering...");
+                Order order = new Order();
+                order.setUserId(FirebaseAuth.getInstance().getUid());
+                order.setAddress(orderAddress.getText().toString());
+                order.setNote(orderNote.getText().toString());
+                order.setStatus("ORDERED");
+                order.setTotalPrice(totalPrice);
+                onCheckout(order, orderItemList);
+            }
+        });
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
 
 
     private void onCheckout(Order order, List<OrderItem> orderItemList) {
@@ -125,12 +149,14 @@ public class CartActivity extends AppCompatActivity {
 
                 Intent resultIntent = new Intent();
                 setResult(Activity.RESULT_OK, resultIntent);
+                hideProgressDialog();
                 finish();
 
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                hideProgressDialog();
                 Toast.makeText(CartActivity.this, "Checkout Failure, please try again!", Toast.LENGTH_LONG).show();
             }
         });
@@ -143,6 +169,7 @@ public class CartActivity extends AppCompatActivity {
         return mFirestore.runTransaction(new Transaction.Function<Void>() {
             @Override
             public Void apply(Transaction transaction) throws FirebaseFirestoreException {
+                long amount = 0;
 
                 // Commit to Firestore
                 transaction.set(orderRef, order);
@@ -150,7 +177,10 @@ public class CartActivity extends AppCompatActivity {
                 for (OrderItem orderItem : orderItemList) {
                     final DocumentReference orderItemRef = orderRef.collection("orderitems").document();
                     transaction.set(orderItemRef, orderItem);
+                    amount+=orderItem.getQuantity();
                 }
+
+                transaction.set(orderRef, order);
                 return null;
             }
         });
@@ -205,5 +235,20 @@ public class CartActivity extends AppCompatActivity {
         notebackground.setStroke(1,Color.BLACK);
         orderAddress.setBackground(orderbackground);
         orderNote.setBackground(notebackground);
+    }
+
+    private void showProgressDialog(String caption) {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setIndeterminate(true);
+        }
+
+        mProgressDialog.setMessage(caption);
+        mProgressDialog.show();
+    }
+    private void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
     }
 }

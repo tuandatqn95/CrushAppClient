@@ -72,13 +72,14 @@ public class ToppingAdapter extends FirestoreAdapter<ToppingAdapter.ViewHolder> 
             ButterKnife.bind(this, itemView);
         }
 
-        public void bind(final DocumentSnapshot snapshot, int position, final OnToppingSelectedListener mListener) {
+        public void bind(final DocumentSnapshot snapshot, final int position, final OnToppingSelectedListener mListener) {
             Topping topping = snapshot.toObject(Topping.class);
-            Glide.with(toppingImage.getContext()).load(topping.getImageURL()).placeholder(R.drawable.loading).error(R.drawable.default_topping).into(toppingImage);
+            Glide.with(toppingImage.getContext()).load(topping.getImageURL()).dontAnimate().placeholder(R.drawable.loading).error(R.drawable.default_topping).into(toppingImage);
             toppingName.setText(topping.getName());
             toppingPrice.setText(StringFormatUtils.FormatCurrency(topping.getPrice()));
             selectedTopping.setImageResource(R.drawable.check);
-            boolean isSelected = selectedTopping.getVisibility() == View.VISIBLE;
+            //boolean isSelected = selectedTopping.getVisibility() == View.VISIBLE;
+            boolean isSelected = selectedPosition.contains(position);
             selectedTopping.setVisibility(isSelected ? View.VISIBLE : View.INVISIBLE);
 
 
@@ -89,9 +90,11 @@ public class ToppingAdapter extends FirestoreAdapter<ToppingAdapter.ViewHolder> 
                         if (selectedTopping.getVisibility() == View.VISIBLE) {
                             selectedTopping.setVisibility(View.INVISIBLE);
                             mListener.OnToppingDeselected(snapshot);
+                            selectedPosition.remove(selectedPosition.indexOf(position));
                         } else {
                             selectedTopping.setVisibility(View.VISIBLE);
                             mListener.OnToppingSelected(snapshot);
+                            selectedPosition.add(position);
                         }
                     }
 

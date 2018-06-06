@@ -19,14 +19,14 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         android:padding="@dimen/activity_margin"
-        android:scaleType="fitCenter"
-        app:srcCompat="@drawable/default_drink" />
+        android:scaleType="fitCenter" />
     <TextView
         android:id="@+id/drink_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/colorDarkGray"
         android:layout_gravity="center"
+        android:gravity="center"
         android:textSize="11dp"
         android:layout_marginTop="@dimen/activity_margin"
         android:text="Trà sữa"/>
@@ -39,5 +39,6 @@
         android:textColor="@color/colorAccent"
         android:textSize="13dp"
         android:layout_gravity="center"
+        android:gravity="center"
         android:text="20.000 đ"/>
 </LinearLayout>

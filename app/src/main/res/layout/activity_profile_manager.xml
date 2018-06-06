@@ -29,7 +29,7 @@
         <!-- Back button -->
         <ImageView
             android:id="@+id/profile_manager_back"
-            android:src="@drawable/icons8_long_arrow_left_50px"
+            android:src="@drawable/icons8_close_white_50px"
             android:layout_margin="10dp"
             android:layout_width="30dp"
             android:layout_height="30dp" />
@@ -42,8 +42,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:src="@drawable/crush_logo" />
+            android:layout_marginTop="50dp" />
 
         <TextView
             android:id="@+id/customer_name"

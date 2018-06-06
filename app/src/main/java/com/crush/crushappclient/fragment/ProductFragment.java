@@ -77,7 +77,7 @@ public class ProductFragment extends Fragment {
         mFirestore = FirebaseFirestore.getInstance();
         mQuery = mFirestore.collection("categories");
 
-        mAdapter = new TabViewPaperAdapter(mQuery, getFragmentManager());
+        mAdapter = new TabViewPaperAdapter(mQuery, getChildFragmentManager());
         viewPaper.setAdapter(mAdapter);
         tabLayout.setupWithViewPager(viewPaper);
 
