@@ -34,7 +34,7 @@ public class SupportActivity extends AppCompatActivity {
         addToolBar();
         List<MenuListView> menuListViewList = new ArrayList<>();
         menuListViewList.add(new MenuListView(R.drawable.icons8_user_50px, "Facebook"));
-        menuListViewList.add(new MenuListView(R.drawable.icons8_whatsapp_50px, "0906903693"));
+        menuListViewList.add(new MenuListView(R.drawable.icons8_whatsapp_50px, "Contact"));
         MenuListViewAdapter adapter = new MenuListViewAdapter(SupportActivity.this, menuListViewList);
         lvMenuSupport.setAdapter(adapter);
 
@@ -47,9 +47,6 @@ public class SupportActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
-        //toolbar.setLogo(R.drawable.crush_logo_yellow);
-        toolbar.setTitle("Crush Milk Tea");
-        toolbar.setTitleTextColor(R.color.colorMainYellow);
     }
 
     @Override

@@ -78,7 +78,7 @@
                 android:layout_height="20dp" />
             <EditText
                 android:id="@+id/edtname"
-                android:hint="Họ và tên"
+                android:hint="Full name"
                 android:textColor="@color/colorLightGray"
                 android:layout_marginHorizontal="15dp"
                 android:layout_marginVertical="10dp"
@@ -100,7 +100,7 @@
                 android:layout_height="20dp" />
             <EditText
                 android:id="@+id/edtaddress"
-                android:hint="Địa chỉ"
+                android:hint="Address"
                 android:textColor="@color/colorLightGray"
                 android:layout_marginHorizontal="15dp"
                 android:layout_marginVertical="10dp"
@@ -203,7 +203,7 @@
     </LinearLayout>
     <Button
         android:id="@+id/btnupdate"
-        android:text="Cập nhật"
+        android:text="Update"
         android:background="@color/colorMainYellow"
         android:layout_weight="1"
         android:layout_width="match_parent"

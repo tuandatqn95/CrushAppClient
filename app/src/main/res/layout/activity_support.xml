@@ -11,6 +11,8 @@
         android:id="@+id/support_activity_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:title="Support"
+        app:titleTextColor="@android:color/white"
         android:background="#383838"
         android:theme="@style/ToolbarStyle">
 
