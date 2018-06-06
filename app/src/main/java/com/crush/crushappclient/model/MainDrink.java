@@ -1,6 +1,7 @@
 package com.crush.crushappclient.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class MainDrink implements Serializable {
 
@@ -17,6 +18,22 @@ public class MainDrink implements Serializable {
         this.price = price;
         this.imageURL = imageURL;
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MainDrink mainDrink = (MainDrink) o;
+        return price == mainDrink.price &&
+                Objects.equals(name, mainDrink.name) &&
+                Objects.equals(imageURL, mainDrink.imageURL);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(name, price, imageURL);
     }
 
     public String getName() {

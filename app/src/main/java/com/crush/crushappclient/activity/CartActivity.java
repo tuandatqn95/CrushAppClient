@@ -264,4 +264,11 @@ public class CartActivity extends AppCompatActivity implements OrderItemAdapter.
     public void OnOrderItemDelete(int position) {
         updateTotalPrice();
     }
+
+    @Override
+    public void OnOrderSelected(OrderItem orderItem) {
+
+    }
+
+
 }

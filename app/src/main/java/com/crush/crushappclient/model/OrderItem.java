@@ -3,6 +3,7 @@ package com.crush.crushappclient.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class OrderItem implements Serializable {
 
@@ -20,6 +21,22 @@ public class OrderItem implements Serializable {
         this.toppings = toppings;
         this.quantity = quantity;
         this.price = price;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderItem orderItem = (OrderItem) o;
+        return price == orderItem.price &&
+                Objects.equals(maindrink, orderItem.maindrink) &&
+                Objects.equals(toppings, orderItem.toppings);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(maindrink, toppings, price);
     }
 
     public MainDrink getMaindrink() {

@@ -123,7 +123,16 @@ public class ProductFragment extends Fragment {
         if (requestCode == TabProductFragment.REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 OrderItem orderItem = (OrderItem) data.getSerializableExtra(ProductInfoActivity.KEY_ORDER_ITEM);
-                orderItemList.add(orderItem);
+
+                boolean exist = false;
+                for (OrderItem item : orderItemList) {
+                    if (item.equals(orderItem)) {
+                        exist = true;
+                        item.setQuantity(item.getQuantity() + orderItem.getQuantity());
+                    }
+                }
+                if (!exist)
+                    orderItemList.add(orderItem);
                 updateCartQuantity();
                 Log.d(TAG, "onActivityResult:" + orderItemList.size());
             }

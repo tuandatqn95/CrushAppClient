@@ -28,6 +28,8 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
 
     public interface OnOrderItemSelectedListener {
         void OnOrderItemDelete(int position);
+
+        void OnOrderSelected(OrderItem orderItem);
     }
 
     private OnOrderItemSelectedListener mListener;
@@ -104,6 +106,13 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
                 }
             });
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null)
+                        mListener.OnOrderSelected(orderItem);
+                }
+            });
         }
 
     }
