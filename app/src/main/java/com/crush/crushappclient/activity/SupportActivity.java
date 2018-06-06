@@ -47,9 +47,6 @@ public class SupportActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
-        //toolbar.setLogo(R.drawable.crush_logo_yellow);
-        toolbar.setTitle("Crush Milk Tea");
-        toolbar.setTitleTextColor(R.color.colorMainYellow);
     }
 
     @Override
