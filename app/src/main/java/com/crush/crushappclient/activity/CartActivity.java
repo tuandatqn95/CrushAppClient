@@ -179,6 +179,7 @@ public class CartActivity extends AppCompatActivity implements OrderItemAdapter.
                     final DocumentReference orderItemRef = orderRef.collection("orderitems").document();
                     transaction.set(orderItemRef, orderItem);
                     amount += orderItem.getQuantity();
+                    order.setAmount(amount);
                 }
 
                 transaction.set(orderRef, order);
