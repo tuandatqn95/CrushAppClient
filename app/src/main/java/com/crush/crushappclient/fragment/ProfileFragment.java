@@ -46,12 +46,12 @@ public class ProfileFragment extends Fragment{
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
         lvMenuProfile = (ListView) rootView.findViewById(R.id.lvMenuProfile);
         List<MenuListView> menuListViewList = new ArrayList<>();
-        menuListViewList.add(new MenuListView(R.drawable.icons8_user_50px, "Quản lý tài khoảng"));
-        menuListViewList.add(new MenuListView(R.drawable.icons8_order_history_50px, "Lịch sử đơn hàng"));
-        menuListViewList.add(new MenuListView(R.drawable.icons8_info_50px, "Giới thiệu"));
-        menuListViewList.add(new MenuListView(R.drawable.icons8_settings_50px, "Cài đặt cấu hình"));
-        menuListViewList.add(new MenuListView(R.drawable.icons8_whatsapp_50px, "Hỗ trợ"));
-        menuListViewList.add(new MenuListView(R.drawable.icons8_exit_50px_1, "Đăng xuất"));
+        menuListViewList.add(new MenuListView(R.drawable.icons8_user_50px, "Account management"));
+        menuListViewList.add(new MenuListView(R.drawable.icons8_order_history_50px, "Order history"));
+        menuListViewList.add(new MenuListView(R.drawable.icons8_info_50px, "About"));
+        menuListViewList.add(new MenuListView(R.drawable.icons8_settings_50px, "Setting"));
+        menuListViewList.add(new MenuListView(R.drawable.icons8_whatsapp_50px, "Support"));
+        menuListViewList.add(new MenuListView(R.drawable.icons8_exit_50px_1, "Logout"));
         MenuListViewAdapter adapter = new MenuListViewAdapter(getActivity(), menuListViewList);
         lvMenuProfile.setAdapter(adapter);
         lvMenuProfile.setOnItemClickListener(new AdapterView.OnItemClickListener() {

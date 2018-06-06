@@ -38,7 +38,7 @@ import javax.annotation.Nullable;
 
 public class MainActivity extends AppCompatActivity implements EventListener<DocumentSnapshot> {
     private static final String TAG = "MainActivity";
-    private static final int REQUEST_CODE = 9;
+
     private static final int RC_SIGN_IN = 9001;
     private ViewPager viewPaper;
 

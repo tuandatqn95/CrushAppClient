@@ -11,6 +11,8 @@
         android:id="@+id/cart_activity_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:titleTextColor="@android:color/white"
+        app:title="Cart"
         android:background="#383838"
         android:theme="@style/ToolbarStyle">
 
@@ -38,17 +40,6 @@
                 android:textSize="13dp"
                 android:textStyle="bold" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView_order_drink"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/order_item"
-                android:background="#fff"
-                tools:listitem="@layout/order_item_layout">
-
-
-            </android.support.v7.widget.RecyclerView>
-
             <EditText
                 android:id="@+id/order_address"
                 android:layout_width="match_parent"
@@ -71,6 +62,17 @@
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginVertical="5dp"
                 android:hint="Note"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView_order_drink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/order_item"
+                android:background="#fff"
+                tools:listitem="@layout/order_item_layout">
+
+
+            </android.support.v7.widget.RecyclerView>
         </LinearLayout>
 
     </ScrollView>

@@ -6,18 +6,15 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.crush.crushappclient.R;
 import com.crush.crushappclient.model.OrderItem;
 import com.crush.crushappclient.util.StringFormatUtils;
-import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.List;
 
@@ -29,11 +26,15 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
     private List<OrderItem> orderItemList;
     private int selectedPosition;
 
-    public OrderItemAdapter(List<OrderItem> orderItemList) {
-        this.orderItemList = orderItemList;
+    public interface OnOrderItemSelectedListener {
+        void OnOrderItemDelete(int position);
     }
 
-    public OrderItemAdapter() {
+    private OnOrderItemSelectedListener mListener;
+
+    public OrderItemAdapter(List<OrderItem> orderItemList, OnOrderItemSelectedListener mListener) {
+        this.orderItemList = orderItemList;
+        this.mListener = mListener;
     }
 
 
@@ -48,7 +49,7 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull OrderItemAdapter.ViewHolder holder, int position) {
-        holder.bind(orderItemList.get(position),orderItemList);
+        holder.bind(orderItemList.get(position), position, mListener);
     }
 
     @Override
@@ -57,7 +58,7 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.orderitem_drink_name)
         TextView drinkName;
 
@@ -84,7 +85,7 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
             drinkQuantity.setBackground(background);
         }
 
-        public void bind(final OrderItem orderItem, final List<OrderItem> orderItemList) {
+        public void bind(final OrderItem orderItem, final int position, final OnOrderItemSelectedListener mListener) {
 
             drinkName.setText(orderItem.getMaindrink().getName());
             drinkQuantity.setText(orderItem.getQuantity() + "");
@@ -96,7 +97,10 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
             deleteOrder.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    orderItemList.remove(position);
+                    notifyDataSetChanged();
+                    if (mListener != null)
+                        mListener.OnOrderItemDelete(position);
                 }
             });
 

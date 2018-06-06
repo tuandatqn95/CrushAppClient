@@ -32,7 +32,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import pl.droidsonroids.gif.GifTextView;
 
 
 public class ProductFragment extends Fragment {
@@ -54,13 +53,12 @@ public class ProductFragment extends Fragment {
     @BindView(R.id.cart_quantity)
     TextView cart_quantity;
 
-    private OrderItem orderItem;
 
     private FirebaseFirestore mFirestore;
     private Query mQuery;
 
     TabViewPaperAdapter mAdapter;
-    private long quantity = 0;
+
     private List<OrderItem> orderItemList = new ArrayList<>();
 
     public ProductFragment() {
@@ -101,10 +99,6 @@ public class ProductFragment extends Fragment {
             mAdapter.stopListening();
     }
 
-    public Object getOrderItem() {
-
-        return orderItem;
-    }
 
     private void init() {
         GradientDrawable cartBackground = new GradientDrawable();
@@ -112,15 +106,16 @@ public class ProductFragment extends Fragment {
         cartBackground.setCornerRadius(25);
         cartBackground.setColor(Color.RED);
         cart_quantity.setBackground(cartBackground);
-        setCartQuantity(quantity);
+        updateCartQuantity();
     }
 
     @OnClick(R.id.shopping_cart)
-    public void OnCartClicked(View view){
+    public void OnCartClicked(View view) {
         Intent intent = new Intent(getActivity(), CartActivity.class);
         intent.putExtra(LIST_ORDER_ITEM, (Serializable) orderItemList);
         getActivity().startActivityForResult(intent, REQUEST_CODE_ORDER_COMPLETE);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -129,7 +124,7 @@ public class ProductFragment extends Fragment {
             if (resultCode == Activity.RESULT_OK) {
                 OrderItem orderItem = (OrderItem) data.getSerializableExtra(ProductInfoActivity.KEY_ORDER_ITEM);
                 orderItemList.add(orderItem);
-                setCartQuantity(quantity+orderItem.getQuantity());
+                updateCartQuantity();
                 Log.d(TAG, "onActivityResult:" + orderItemList.size());
             }
             if (resultCode == Activity.RESULT_CANCELED) {
@@ -137,17 +132,23 @@ public class ProductFragment extends Fragment {
             }
         }
         if (requestCode == REQUEST_CODE_ORDER_COMPLETE) {
-            if(resultCode == Activity.RESULT_OK) {
+            if (resultCode == Activity.RESULT_OK) {
                 orderItemList.clear();
-                setCartQuantity(0);
+                updateCartQuantity();
                 Toast.makeText(getActivity(), "Order successfully!", Toast.LENGTH_SHORT).show();
+            } else {
+                orderItemList = (List<OrderItem>) data.getSerializableExtra(LIST_ORDER_ITEM);
+                updateCartQuantity();
             }
         }
 
     }
 
-    private void setCartQuantity(long quan){
-        quantity = quan;
+    private void updateCartQuantity() {
+        long quantity = 0;
+        for (OrderItem orderItem : orderItemList) {
+            quantity += orderItem.getQuantity();
+        }
         cart_quantity.setText(quantity + "");
     }
 }

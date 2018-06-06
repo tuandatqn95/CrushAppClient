@@ -2,7 +2,6 @@ package com.crush.crushappclient.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,11 +16,11 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +31,6 @@ import com.crush.crushappclient.fragment.ProductFragment;
 import com.crush.crushappclient.model.Order;
 import com.crush.crushappclient.model.OrderItem;
 import com.crush.crushappclient.util.StringFormatUtils;
-import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -42,13 +40,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Transaction;
 
+import java.io.Serializable;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CartActivity extends AppCompatActivity {
+public class CartActivity extends AppCompatActivity implements OrderItemAdapter.OnOrderItemSelectedListener {
 
     private static final String TAG = "CartActivity";
     private List<OrderItem> orderItemList;
@@ -69,19 +68,20 @@ public class CartActivity extends AppCompatActivity {
     EditText orderNote;
 
 
-
     private FirebaseFirestore mFirestore;
-    private long totalPrice = 0;
+
     private OrderItemAdapter adapter;
     private ProgressDialog mProgressDialog;
-    private String address="";
-    private String note="";
+    private String address = "";
+    private String note = "";
 
     @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         ButterKnife.bind(this);
         addToolBar();
 
@@ -89,31 +89,32 @@ public class CartActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         orderItemList = (List<OrderItem>) intent.getSerializableExtra(ProductFragment.LIST_ORDER_ITEM);
-        adapter = new OrderItemAdapter(orderItemList);
+        adapter = new OrderItemAdapter(orderItemList, this);
 
         rvOrderDrink.setAdapter(adapter);
         rvOrderDrink.setLayoutManager(new LinearLayoutManager(this));
         rvOrderDrink.setItemAnimator(new DefaultItemAnimator());
         rvOrderDrink.addItemDecoration(new DividerItemDecoration(rvOrderDrink.getContext(), DividerItemDecoration.VERTICAL));
 
-        setTotalPrice();
+        updateTotalPrice();
         addBackGround();
 
     }
 
     @OnClick(R.id.btn_cart)
     public void OnBtnCartCLicked(View view) {
-        if (orderItemList.size() < 1){
+        if (orderItemList.size() < 1) {
             Toast.makeText(CartActivity.this, "Please order!", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(orderAddress.getText()+""==""){
+        if (TextUtils.isEmpty(orderAddress.getText())) {
             Toast.makeText(CartActivity.this, "Please fill address", Toast.LENGTH_SHORT).show();
             return;
         }
         showAlertDialog();
     }
-    public void showAlertDialog(){
+
+    public void showAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Confirm");
         builder.setMessage("Do you want to order?");
@@ -127,7 +128,7 @@ public class CartActivity extends AppCompatActivity {
                 order.setAddress(orderAddress.getText().toString());
                 order.setNote(orderNote.getText().toString());
                 order.setStatus("ORDERED");
-                order.setTotalPrice(totalPrice);
+                order.setTotalPrice(updateTotalPrice());
                 onCheckout(order, orderItemList);
             }
         });
@@ -177,7 +178,7 @@ public class CartActivity extends AppCompatActivity {
                 for (OrderItem orderItem : orderItemList) {
                     final DocumentReference orderItemRef = orderRef.collection("orderitems").document();
                     transaction.set(orderItemRef, orderItem);
-                    amount+=orderItem.getQuantity();
+                    amount += orderItem.getQuantity();
                 }
 
                 transaction.set(orderRef, order);
@@ -186,24 +187,23 @@ public class CartActivity extends AppCompatActivity {
         });
     }
 
-    private void setTotalPrice(){
+    private long updateTotalPrice() {
+        long totalPrice = 0;
         for (OrderItem orderItem : orderItemList) {
             totalPrice += orderItem.getPrice() * orderItem.getQuantity();
         }
         txtTotalPrice.setText(StringFormatUtils.FormatCurrency(totalPrice));
+        return totalPrice;
     }
 
 
-
     @SuppressLint("ResourceAsColor")
-    private void addToolBar(){
+    private void addToolBar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
-        //toolbar.setLogo(R.drawable.crush_logo_yellow);
-        toolbar.setTitle("Crush Milk Tea");
-        toolbar.setTitleTextColor(R.color.colorMainYellow);
+
     }
 
     @Override
@@ -214,12 +214,9 @@ public class CartActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case 16908332:
-                Intent resultIntent = new Intent();
-                setResult(Activity.RESULT_CANCELED, resultIntent);
-                finish();
-
+                onBackPressed();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -228,11 +225,11 @@ public class CartActivity extends AppCompatActivity {
         GradientDrawable orderbackground = new GradientDrawable();
         orderbackground.setShape(GradientDrawable.RECTANGLE);
         orderbackground.setCornerRadius(15);
-        orderbackground.setStroke(1,Color.BLACK);
+        orderbackground.setStroke(1, Color.BLACK);
         GradientDrawable notebackground = new GradientDrawable();
         notebackground.setShape(GradientDrawable.RECTANGLE);
         notebackground.setCornerRadius(15);
-        notebackground.setStroke(1,Color.BLACK);
+        notebackground.setStroke(1, Color.BLACK);
         orderAddress.setBackground(orderbackground);
         orderNote.setBackground(notebackground);
     }
@@ -246,9 +243,25 @@ public class CartActivity extends AppCompatActivity {
         mProgressDialog.setMessage(caption);
         mProgressDialog.show();
     }
+
     private void hideProgressDialog() {
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.dismiss();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra(ProductFragment.LIST_ORDER_ITEM, (Serializable) orderItemList);
+        setResult(Activity.RESULT_CANCELED, resultIntent);
+        super.onBackPressed();
+
+
+    }
+
+    @Override
+    public void OnOrderItemDelete(int position) {
+        updateTotalPrice();
     }
 }
