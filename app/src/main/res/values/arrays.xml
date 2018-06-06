@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="spinnerItems">
-        <item>Không xác định</item>
-        <item>Nam</item>
-        <item>Nữ</item>
+        <item>Unknown</item>
+        <item>Male</item>
+        <item>Female</item>
     </string-array>
 </resources>

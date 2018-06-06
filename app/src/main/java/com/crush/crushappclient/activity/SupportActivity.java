@@ -34,7 +34,7 @@ public class SupportActivity extends AppCompatActivity {
         addToolBar();
         List<MenuListView> menuListViewList = new ArrayList<>();
         menuListViewList.add(new MenuListView(R.drawable.icons8_user_50px, "Facebook"));
-        menuListViewList.add(new MenuListView(R.drawable.icons8_whatsapp_50px, "0906903693"));
+        menuListViewList.add(new MenuListView(R.drawable.icons8_whatsapp_50px, "Contact"));
         MenuListViewAdapter adapter = new MenuListViewAdapter(SupportActivity.this, menuListViewList);
         lvMenuSupport.setAdapter(adapter);
 
